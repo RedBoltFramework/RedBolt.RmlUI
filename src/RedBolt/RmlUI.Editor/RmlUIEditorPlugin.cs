@@ -5,7 +5,7 @@ using RedBolt.Plugins;
 using RedBolt.RmlUI.Editor;
 
 [assembly: PluginModule("RedBolt.RmlUI.Editor", typeof(RmlUIEditorPlugin),
-    ReloadPolicy = PluginReloadPolicy.ProcessResident)]
+    ReloadPolicy = PluginReloadPolicy.ProcessResident, AutoLoad = true)]
 
 namespace RedBolt.RmlUI.Editor;
 
