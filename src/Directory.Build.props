@@ -1,0 +1,35 @@
+<Project>
+  <PropertyGroup>
+    <RedBoltRmlUIRoot>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..'))</RedBoltRmlUIRoot>
+    <RedBoltRoot Condition="'$(RedBoltRoot)' == ''">$([System.IO.Path]::GetFullPath('$(RedBoltRmlUIRoot)/../RedBolt'))</RedBoltRoot>
+    <RedBoltAudioEnabled>true</RedBoltAudioEnabled>
+    <RedBoltDearImGuiEnabled>true</RedBoltDearImGuiEnabled>
+    <RedBoltGlowEnabled>true</RedBoltGlowEnabled>
+    <RedBoltUtilityEnabled>true</RedBoltUtilityEnabled>
+    <RedBoltEditorEnabled>true</RedBoltEditorEnabled>
+    <RedBoltExternalModuleRoot>$(RedBoltRmlUIRoot)</RedBoltExternalModuleRoot>
+    <RedBoltExternalModuleName>RedBolt.RmlUI</RedBoltExternalModuleName>
+    <RedBoltExternalBuildProjectName>RedBolt.RmlUI.Build</RedBoltExternalBuildProjectName>
+    <RedBoltExternalGeneratorProjectName>RedBolt.RmlUI.Generator.Dependencies</RedBoltExternalGeneratorProjectName>
+    <RedBoltExternalGeneratorProjectPrefix>RedBolt.RmlUI.Generator.</RedBoltExternalGeneratorProjectPrefix>
+    <RedBoltExternalNativeWebProjectName>RedBolt.RmlUI.Native.Web</RedBoltExternalNativeWebProjectName>
+    <RedBoltExternalNativeAndroidProjectName>RedBolt.RmlUI.Native.Android</RedBoltExternalNativeAndroidProjectName>
+    <RedBoltExternalModuleProjectNames>RedBolt.RmlUI;RedBolt.RmlUI.Editor;RedBolt.Bindings.RmlUi</RedBoltExternalModuleProjectNames>
+    <RedBoltExternalGeneratedBindingsDirectory>redbolt-rmlui-native</RedBoltExternalGeneratedBindingsDirectory>
+    <RedBoltExternalBindingsSubdirectory>rmlui</RedBoltExternalBindingsSubdirectory>
+    <RedBoltExternalBindingsProjectName>RedBolt.Bindings.RmlUi</RedBoltExternalBindingsProjectName>
+    <RedBoltExternalHasNative>true</RedBoltExternalHasNative>
+    <RedBoltExternalNativeTargetPrefix>redbolt-rmlui</RedBoltExternalNativeTargetPrefix>
+    <RedBoltExternalEnabledNativeModules>RMLUI</RedBoltExternalEnabledNativeModules>
+    <RedBoltExternalDesktopResourceRoot>$(RedBoltRmlUIRoot)</RedBoltExternalDesktopResourceRoot>
+    <RedBoltExternalWebPInvokeModules>RedBolt.Native.RmlUi</RedBoltExternalWebPInvokeModules>
+    <RedBoltExternalAndroidNativeProject>$(RedBoltRmlUIRoot)/src/RedBolt/Native/RedBolt.RmlUI.Native.Android.csproj</RedBoltExternalAndroidNativeProject>
+  </PropertyGroup>
+  <Import Project="$(RedBoltRoot)/src/RedBolt/Build/Directory.Build.props" />
+  <PropertyGroup>
+    <RedBoltExternalAndroidNativeOutput>$(RedBoltRmlUIRoot)/build/bin/$(Configuration)/$(RedBoltPlatform)/extern/runtimes/$(RedBoltPlatform)/native</RedBoltExternalAndroidNativeOutput>
+    <RedBoltExternalWebArchive>$(RedBoltNativeBuildDir)/lib/Release/wasm/RedBolt.RmlUI.Native.Web.a</RedBoltExternalWebArchive>
+    <RedBoltExternalModuleEnabled>$(RedBoltRmlUIEnabled)</RedBoltExternalModuleEnabled>
+    <RedBoltExternalModuleBuildProperties>RedBoltRmlUIEnabled=$(RedBoltRmlUIEnabled)</RedBoltExternalModuleBuildProperties>
+  </PropertyGroup>
+</Project>

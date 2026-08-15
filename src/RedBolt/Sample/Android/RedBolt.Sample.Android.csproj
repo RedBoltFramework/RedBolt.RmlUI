@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>RedBolt.RmlUI.Sample.Android</AssemblyName>
+    <ApplicationId>org.redbolt.rmlui.samples</ApplicationId>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../RmlUI/RedBolt.RmlUI.csproj" />
+    <Compile Include="../AdvancedUI/**/*.cs" Link="Samples/AdvancedUI/%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="../HelloRmlUI/**/*.cs" Link="Samples/HelloRmlUI/%(RecursiveDir)%(Filename)%(Extension)" />
+    <AndroidAsset Include="$(RedBoltRmlUIRoot)/bin/CoreData/**/*" Link="CoreData/%(RecursiveDir)%(Filename)%(Extension)" />
+    <AndroidAsset Include="$(RedBoltRmlUIRoot)/bin/Data/**/*" Link="Data/%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+  <Import Project="$(RedBoltRoot)/src/RedBolt/Build/AndroidSample.targets" />
+</Project>

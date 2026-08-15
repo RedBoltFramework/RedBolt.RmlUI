@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk.WebAssembly">
+  <ItemGroup>
+    <ProjectReference Include="../../RmlUI/RedBolt.RmlUI.csproj" />
+    <Compile Include="../AdvancedUI/**/*.cs" Link="Samples/AdvancedUI/%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="../HelloRmlUI/**/*.cs" Link="Samples/HelloRmlUI/%(RecursiveDir)%(Filename)%(Extension)" />
+    <TrimmerRootAssembly Include="RedBolt.RmlUI;RedBolt.Bindings.RmlUi" />
+    <RedBoltWebCoreDataResource Include="$(RedBoltRmlUIRoot)/bin/CoreData/**/*" />
+    <RedBoltWebDataResource Include="$(RedBoltRmlUIRoot)/bin/Data/**/*" />
+  </ItemGroup>
+  <Import Project="$(RedBoltRoot)/src/RedBolt/Build/WebSample.targets" />
+</Project>

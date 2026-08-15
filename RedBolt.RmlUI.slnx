@@ -1,0 +1,24 @@
+<Solution>
+  <Folder Name="/src/RedBolt/Build/">
+    <Project Path="src/RedBolt/Build/RedBolt.RmlUI.Build.csproj" />
+  </Folder>
+  <Folder Name="/src/RedBolt/">
+    <Project Path="src/RedBolt/RmlUI/RedBolt.RmlUI.csproj"><Build Project="false" /></Project>
+    <Project Path="src/RedBolt/RmlUI.Editor/RedBolt.RmlUI.Editor.csproj"><Build Project="false" /></Project>
+  </Folder>
+  <Folder Name="/src/RedBolt/Generator/">
+    <Project Path="src/RedBolt/Generator/Dependencies/RedBolt.RmlUI.Generator.Dependencies.csproj"><Build Project="false" /></Project>
+  </Folder>
+  <Folder Name="/src/RedBolt/Native/">
+    <Project Path="src/RedBolt/Native/RmlUi/RedBolt.Bindings.RmlUi.csproj"><Build Project="false" /></Project>
+    <Project Path="src/RedBolt/Native/RedBolt.RmlUI.Native.csproj"><Build Project="false" /></Project>
+    <Project Path="src/RedBolt/Native/RedBolt.RmlUI.Native.Web.csproj"><Build Project="false" /></Project>
+    <Project Path="src/RedBolt/Native/RedBolt.RmlUI.Native.Android.csproj"><Build Project="false" /></Project>
+  </Folder>
+  <Folder Name="/src/RedBolt/Sample/">
+    <Project Path="src/RedBolt/Sample/AdvancedUI/RedBolt.Sample.AdvancedUI.csproj"><Build Project="false" /></Project>
+    <Project Path="src/RedBolt/Sample/HelloRmlUI/RedBolt.Sample.HelloRmlUI.csproj"><Build Project="false" /></Project>
+    <Project Path="src/RedBolt/Sample/Web/RedBolt.Sample.Web.csproj"><Build Project="false" /></Project>
+    <Project Path="src/RedBolt/Sample/Android/RedBolt.Sample.Android.csproj"><Build Project="false" /></Project>
+  </Folder>
+</Solution>

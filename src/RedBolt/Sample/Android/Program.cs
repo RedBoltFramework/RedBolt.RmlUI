@@ -1,0 +1,10 @@
+namespace RedBolt.Sample.Android;
+
+internal static class SampleCatalog
+{
+    internal static readonly SampleEntry[] Entries =
+    [
+        new("advanced-ui", "Advanced UI", static () => new global::RedBolt.Sample.AdvancedUI.AdvancedUIApplication()),
+        new("hello-rmlui", "Hello RmlUI", static () => new global::RedBolt.Sample.HelloRmlUI.HelloRmlUI()),
+    ];
+}

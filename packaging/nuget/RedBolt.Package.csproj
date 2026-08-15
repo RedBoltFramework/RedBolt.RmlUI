@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RedBoltExternalPackageProjectUrl>https://github.com/RedBoltFramework/RedBolt.RmlUI</RedBoltExternalPackageProjectUrl>
+    <RedBoltExternalPackageRepositoryUrl>https://github.com/RedBoltFramework/RedBolt.RmlUI.git</RedBoltExternalPackageRepositoryUrl>
+    <RedBoltExternalPackageTags>RedBolt game-engine csharp dotnet ui rmlui</RedBoltExternalPackageTags>
+  </PropertyGroup>
+  <Import Project="../../../RedBolt/src/RedBolt/Build/NuGetPackage.targets" />
+</Project>

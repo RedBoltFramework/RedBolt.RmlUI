@@ -1,0 +1,7 @@
+<Project>
+  <PropertyGroup>
+    <RedBoltRmlUIEnabled Condition="$([System.String]::Copy('$(_RedBoltEnableModulesList)').Contains(',all,')) or $([System.String]::Copy('$(_RedBoltEnableModulesList)').Contains(',rml-ui,'))">true</RedBoltRmlUIEnabled>
+    <RedBoltRmlUIEnabled Condition="'$(RedBoltRmlUIEnabled)' == '' and !$([System.String]::Copy('$(_RedBoltDisableModulesList)').Contains(',all,')) and !$([System.String]::Copy('$(_RedBoltDisableModulesList)').Contains(',rml-ui,'))">true</RedBoltRmlUIEnabled>
+    <RedBoltRmlUIEnabled Condition="'$(RedBoltRmlUIEnabled)' == ''">false</RedBoltRmlUIEnabled>
+  </PropertyGroup>
+</Project>
