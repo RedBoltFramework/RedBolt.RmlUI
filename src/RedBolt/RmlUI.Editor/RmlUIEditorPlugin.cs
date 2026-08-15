@@ -10,7 +10,6 @@ using RedBolt.RmlUI.Editor;
 namespace RedBolt.RmlUI.Editor;
 
 using System;
-using System.Collections.Generic;
 
 using RedBolt.Core;
 using RedBolt.Editor.Core;
@@ -21,11 +20,10 @@ using EditorProject = RedBolt.Editor.Project.Project;
 using RmlUISubsystem = RedBolt.RmlUI.RmlUI;
 
 /// <summary>Developer-only RmlUI integration discovered by the standard RedBolt Editor.</summary>
-public sealed class RmlUIEditorPlugin : PluginApplication
+public sealed class RmlUIEditorPlugin : EditorPluginApplication
 {
-    protected override void Load()
+    protected override void LoadEditorPlugin()
     {
-        _reflection = Context.RegisterAssemblyScoped(typeof(RmlUISubsystem).Assembly);
         _rmlUI = Context.GetSubsystem<RmlUISubsystem>();
         if (_rmlUI is null)
         {
@@ -33,20 +31,10 @@ public sealed class RmlUIEditorPlugin : PluginApplication
             Context.RegisterSubsystem(_rmlUI);
             _ownsSubsystem = true;
         }
-
-        var editorPlugins = GetSubsystem<EditorPluginManager>();
-        _registrations.Add(editorPlugins.AddScopedPlugin<EditorProject>(
-            "RmlUI.ReloadFonts", ApplyProject));
-        _registrations.Add(editorPlugins.AddScopedPlugin<GameViewTab>(
-            "RmlUI.GameView", ApplyGameView));
     }
 
-    protected override void Unload()
+    protected override void UnloadEditorPlugin()
     {
-        for (var index = _registrations.Count - 1; index >= 0; --index)
-            _registrations[index].Dispose();
-        _registrations.Clear();
-
         _rmlUI?.SetRenderTarget(null);
         if (_ownsSubsystem && _rmlUI is not null)
         {
@@ -55,42 +43,48 @@ public sealed class RmlUIEditorPlugin : PluginApplication
         }
         _rmlUI = null;
         _ownsSubsystem = false;
-        _reflection?.Dispose();
-        _reflection = null;
     }
 
-    private IDisposable ApplyProject(EditorProject project)
+    private RmlUISubsystem? _rmlUI;
+    private bool _ownsSubsystem;
+}
+
+[EditorExtension("RmlUI.ReloadFonts")]
+internal static class RmlUIReloadFontsExtension
+{
+    public static IDisposable Apply(EditorProject project)
     {
-        void ReloadFonts(EditorProject _) => _rmlUI?.ReloadFonts();
+        var rmlUI = Context.Instance.GetSubsystem<RmlUISubsystem>();
+        void ReloadFonts(EditorProject _) => rmlUI?.ReloadFonts();
         project.OnInitialized += ReloadFonts;
         return new CallbackRegistration(() => project.OnInitialized -= ReloadFonts);
     }
+}
 
-    private IDisposable ApplyGameView(GameViewTab gameView)
+[EditorExtension("RmlUI.GameView")]
+internal static class RmlUIGameViewExtension
+{
+    public static IDisposable Apply(GameViewTab gameView)
     {
-        void SetRenderTarget(GameViewTab _, RenderSurface? target) => _rmlUI?.SetRenderTarget(target);
+        var rmlUI = Context.Instance.GetSubsystem<RmlUISubsystem>();
+        void SetRenderTarget(GameViewTab _, RenderSurface? target) => rmlUI?.SetRenderTarget(target);
         gameView.RenderTargetChanged += SetRenderTarget;
-        _rmlUI?.SetRenderTarget(gameView.RenderTarget);
+        rmlUI?.SetRenderTarget(gameView.RenderTarget);
         return new CallbackRegistration(() =>
         {
             gameView.RenderTargetChanged -= SetRenderTarget;
-            _rmlUI?.SetRenderTarget(null);
+            rmlUI?.SetRenderTarget(null);
         });
     }
+}
 
-    private sealed class CallbackRegistration(Action callback) : IDisposable
+internal sealed class CallbackRegistration(Action callback) : IDisposable
+{
+    private Action? _callback = callback;
+
+    public void Dispose()
     {
-        private Action? _callback = callback;
-
-        public void Dispose()
-        {
-            _callback?.Invoke();
-            _callback = null;
-        }
+        _callback?.Invoke();
+        _callback = null;
     }
-
-    private readonly List<IDisposable> _registrations = [];
-    private AssemblyRegistration? _reflection;
-    private RmlUISubsystem? _rmlUI;
-    private bool _ownsSubsystem;
 }

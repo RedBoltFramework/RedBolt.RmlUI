@@ -10,4 +10,4 @@ dotnet build RedBolt.RmlUI.slnx --configuration Debug
 
 `RedBolt.RmlUI` depends directly on the core-repository `RedBolt.Audio` module and uses its sound feature without an abstraction layer.
 
-The core `RedBolt.Editor` has no RmlUI dependency. `RedBolt.RmlUI.Editor` composes RmlUI into the editor as a separate developer-only executable and is not a dependency of game assemblies.
+The core `RedBolt.Editor` has no RmlUI dependency. `RedBolt.RmlUI.Editor` composes RmlUI into the editor through declarative project and game-view extensions and is not a dependency of game assemblies.
