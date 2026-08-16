@@ -130,7 +130,7 @@ target_include_directories(redbolt-rmlui-native-rmlui PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/src/RedBolt/Native/RmlUi"
     "${REDBOLT_ROOT}/extern/harfbuzz/src"
     "${REDBOLT_ROOT}/src/RedBolt/Native/HarfBuzz")
-target_compile_definitions(redbolt-rmlui-native-rmlui PRIVATE REDBOLT_NATIVE_BUILD RMLUI_NO_THIRDPARTY_CONTAINERS)
+target_compile_definitions(redbolt-rmlui-native-rmlui PRIVATE REDBOLT_NATIVE_BUILD RMLUI_NO_THIRDPARTY_CONTAINERS RMLUI_STATIC_LIB)
 set_target_properties(redbolt-rmlui-native-rmlui PROPERTIES
     OUTPUT_NAME "${REDBOLT_RMLUI_NATIVE_LIBRARY_NAME}"
     RUNTIME_OUTPUT_DIRECTORY "${REDBOLT_RUNTIME_OUTPUT_DIR}"
