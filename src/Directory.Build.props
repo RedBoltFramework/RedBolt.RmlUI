@@ -15,7 +15,6 @@ For a copy, see <https://opensource.org/licenses/MIT> or the accompanying LICENS
     <RedBoltEditorEnabled>true</RedBoltEditorEnabled>
     <RedBoltExternalModuleRoot>$(RedBoltRmlUIRoot)</RedBoltExternalModuleRoot>
     <RedBoltExternalModuleName>RedBolt.RmlUI</RedBoltExternalModuleName>
-    <RedBoltExternalBuildProjectName>RedBolt.RmlUI.Build</RedBoltExternalBuildProjectName>
     <RedBoltExternalGeneratorProjectName>RedBolt.RmlUI.Generator.Dependencies</RedBoltExternalGeneratorProjectName>
     <RedBoltExternalGeneratorProjectPrefix>RedBolt.RmlUI.Generator.</RedBoltExternalGeneratorProjectPrefix>
     <RedBoltExternalNativeWebProjectName>RedBolt.RmlUI.Native.Web</RedBoltExternalNativeWebProjectName>
@@ -36,6 +35,5 @@ For a copy, see <https://opensource.org/licenses/MIT> or the accompanying LICENS
     <RedBoltExternalAndroidNativeOutput>$(RedBoltRmlUIRoot)/build/bin/$(Configuration)/$(RedBoltPlatform)/extern/runtimes/$(RedBoltPlatform)/native</RedBoltExternalAndroidNativeOutput>
     <RedBoltExternalWebArchive>$(RedBoltNativeBuildDir)/lib/Release/wasm/RedBolt.RmlUI.Native.Web.a</RedBoltExternalWebArchive>
     <RedBoltExternalModuleEnabled>$(RedBoltRmlUIEnabled)</RedBoltExternalModuleEnabled>
-    <RedBoltExternalModuleBuildProperties>RedBoltRmlUIEnabled=$(RedBoltRmlUIEnabled)</RedBoltExternalModuleBuildProperties>
   </PropertyGroup>
 </Project>
