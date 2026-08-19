@@ -101,8 +101,9 @@ if(NOT EMSCRIPTEN)
     if(CMAKE_CONFIGURATION_TYPES)
         foreach(_redbolt_core_configuration IN LISTS CMAKE_CONFIGURATION_TYPES)
             string(TOUPPER "${_redbolt_core_configuration}" _redbolt_core_configuration_upper)
-            set(_redbolt_core_native_dir
-                "${REDBOLT_ROOT}/build/bin/${_redbolt_core_configuration}/${_redbolt_core_platform}/extern/runtimes/${_redbolt_core_platform}/native")
+            set(_redbolt_core_native_dir "${REDBOLT_RUNTIME_OUTPUT_DIR}")
+            string(REPLACE "$<CONFIG>" "${_redbolt_core_configuration}"
+                _redbolt_core_native_dir "${_redbolt_core_native_dir}")
             if(WIN32)
                 set_target_properties(redbolt-core-harfbuzz PROPERTIES
                     IMPORTED_LOCATION_${_redbolt_core_configuration_upper} "${_redbolt_core_native_dir}/RedBolt.Native.HarfBuzz.dll"
@@ -113,8 +114,7 @@ if(NOT EMSCRIPTEN)
             endif()
         endforeach()
     else()
-        set(_redbolt_core_native_dir
-            "${REDBOLT_ROOT}/build/bin/${CMAKE_BUILD_TYPE}/${_redbolt_core_platform}/extern/runtimes/${_redbolt_core_platform}/native")
+        set(_redbolt_core_native_dir "${REDBOLT_RUNTIME_OUTPUT_DIR}")
         set_target_properties(redbolt-core-harfbuzz PROPERTIES
             IMPORTED_LOCATION "${_redbolt_core_native_dir}/libRedBolt.Native.HarfBuzz.so")
     endif()

@@ -6,4 +6,11 @@ For a copy, see <https://opensource.org/licenses/MIT> or the accompanying LICENS
 
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(RedBoltRoot)/src/RedBolt/Build/NativeBuildProject.targets" />
+
+  <ItemGroup>
+    <ProjectReference Include="$(RedBoltRoot)/src/RedBolt/Native/HarfBuzz/RedBolt.Bindings.HarfBuzz.csproj"
+                      ReferenceOutputAssembly="false"
+                      Private="false"
+                      PrivateAssets="all" />
+  </ItemGroup>
 </Project>
