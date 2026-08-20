@@ -5,11 +5,12 @@ For a copy, see <https://opensource.org/licenses/MIT> or the accompanying LICENS
 -->
 
 <Project>
+  <!-- Module solution entry point: declares itself as an external module and chains to the core solution props. -->
   <PropertyGroup>
     <RedBoltRmlUIRoot>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory).'))</RedBoltRmlUIRoot>
     <RedBoltRoot Condition="'$(RedBoltRoot)' == ''">$([System.IO.Path]::GetFullPath('$(RedBoltRmlUIRoot)/../RedBolt'))</RedBoltRoot>
     <RedBoltExternalModuleRoot>$(RedBoltRmlUIRoot)</RedBoltExternalModuleRoot>
     <RedBoltExternalModuleName>RedBolt.RmlUI</RedBoltExternalModuleName>
   </PropertyGroup>
-  <Import Project="$(RedBoltRoot)/src/RedBolt/Build/Directory.Solution.props" />
+  <Import Project="$(RedBoltRoot)/eng/RedBolt.ModuleBuild/Directory.Solution.props" />
 </Project>
