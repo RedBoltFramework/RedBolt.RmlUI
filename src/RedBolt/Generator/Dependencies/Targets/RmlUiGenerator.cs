@@ -190,7 +190,7 @@ internal sealed class RmlUiGenerator(string nativeLibraryName)
         var vector2iType = BindingType.CreateConfigured(
             "Rml::Vector2<int>", "Vector2i",
             marshallerTypeName: null,
-            managedMarshaller: "global::RedBolt.Math.Vector2iMarshaller");
+            managedMarshaller: "global::RedBolt.Math.Vector2iIndirectMarshaller");
         var getDimensions = context.Members.OfType<FunctionBinding>().First(static method =>
             method.NativeName == "GetDimensions");
         getDimensions.ReturnType = vector2iType;
@@ -412,7 +412,7 @@ internal sealed class RmlUiGenerator(string nativeLibraryName)
         var vector2fType = BindingType.CreateConfigured(
             "Rml::Vector2<float>", "Vector2f",
             marshallerTypeName: null,
-            managedMarshaller: "global::RedBolt.Math.Vector2fMarshaller");
+            managedMarshaller: "global::RedBolt.Math.Vector2fIndirectMarshaller");
         var getAbsoluteOffset = element.Members.OfType<FunctionBinding>().First(static method =>
             method.NativeName == "GetAbsoluteOffset");
         getAbsoluteOffset.ReturnType = vector2fType;
@@ -725,22 +725,22 @@ internal sealed class RmlUiGenerator(string nativeLibraryName)
         var vector2fType = BindingType.CreateConfigured(
             "Rml::Vector2f", "Vector2f",
             marshallerTypeName: null,
-            managedMarshaller: "global::RedBolt.Math.Vector2fMarshaller")
+            managedMarshaller: "global::RedBolt.Math.Vector2fIndirectMarshaller")
             .WithCppIsRecordValue(true);
         var vector3fType = BindingType.CreateConfigured(
             "Rml::Vector3f", "Vector3f",
             marshallerTypeName: null,
-            managedMarshaller: "global::RedBolt.Math.Vector3fMarshaller")
+            managedMarshaller: "global::RedBolt.Math.Vector3fIndirectMarshaller")
             .WithCppIsRecordValue(true);
         var vector4fType = BindingType.CreateConfigured(
             "Rml::Vector4f", "Vector4f",
             marshallerTypeName: null,
-            managedMarshaller: "global::RedBolt.Math.Vector4fMarshaller")
+            managedMarshaller: "global::RedBolt.Math.Vector4fIndirectMarshaller")
             .WithCppIsRecordValue(true);
         var colourfType = BindingType.CreateConfigured(
             "Rml::Colourf", "global::RedBolt.Math.Color",
             marshallerTypeName: null,
-            managedMarshaller: "global::RedBolt.Math.ColorMarshaller")
+            managedMarshaller: "global::RedBolt.Math.ColorIndirectMarshaller")
             .WithCppIsRecordValue(true);
         var colourbType = BindingType.CreateConfigured(
             "Rml::Colourb", "global::RedBolt.Bindings.RmlUi.RmlUiLegacyColourb")

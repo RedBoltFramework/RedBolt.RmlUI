@@ -7,6 +7,7 @@ namespace RedBolt.Sample.AdvancedUI;
 using System;
 
 using RedBolt;
+using RedBolt.Audio;
 using RedBolt.Container;
 using RedBolt.Core;
 using RedBolt.Engine;
@@ -344,6 +345,7 @@ internal sealed class AdvancedUIApplication : Application
 {
     protected override void Start()
     {
+        Audio.RegisterAudioSubsystem(Context);
         RmlUISubsystem.RegisterRmlUILibrary(Context);
         _ui = new RmlUISubsystem();
         Context.RegisterSubsystem(_ui);

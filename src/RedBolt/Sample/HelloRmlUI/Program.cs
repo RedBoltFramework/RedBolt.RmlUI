@@ -8,6 +8,7 @@ using System;
 using System.Runtime.CompilerServices;
 
 using RedBolt;
+using RedBolt.Audio;
 using RedBolt.Bindings.RmlUi;
 using RedBolt.Container;
 using RedBolt.Core;
@@ -150,6 +151,7 @@ public sealed class HelloRmlUI : Application
     protected override void Start()
     {
         // Register custom components.
+        Audio.RegisterAudioSubsystem(Context);
         RmlUISubsystem.RegisterRmlUILibrary(Context);
         Context.RegisterAssembly(typeof(SimpleWindow).Assembly);
         _ui = new RmlUISubsystem();

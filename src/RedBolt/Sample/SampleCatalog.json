@@ -1,0 +1,28 @@
+{
+  "name": "RedBolt.RmlUI",
+  "applicationId": "org.redbolt.rmlui.samples",
+  "web": true,
+  "android": true,
+  "native": true,
+  "webNative": true,
+  "projectReferences": [
+    "src/RedBolt/RmlUI/RedBolt.RmlUI.csproj"
+  ],
+  "coreData": [
+    "bin/CoreData/**/*"
+  ],
+  "data": [
+    "bin/Data/**/*"
+  ],
+  "webPInvokeModules": [
+    "RedBolt.Native.RmlUi"
+  ],
+  "trimmerRootAssemblies": [
+    "RedBolt.RmlUI",
+    "RedBolt.Bindings.RmlUi"
+  ],
+  "samples": [
+    { "id": "advanced-ui", "name": "Advanced UI", "applicationType": "RedBolt.Sample.AdvancedUI.AdvancedUIApplication", "source": "AdvancedUI" },
+    { "id": "hello-rmlui", "name": "Hello RmlUI", "applicationType": "RedBolt.Sample.HelloRmlUI.HelloRmlUI", "source": "HelloRmlUI" }
+  ]
+}

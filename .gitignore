@@ -20,9 +20,10 @@ imgui.ini
 extern/cmake.lock
 extern/*/
 
-# .NET outputs.
-bin/
-obj/
+# .NET outputs. The repository-root bin tree contains source data assets.
+**/bin/
+**/obj/
+!/bin/
 
 # Editor and OS noise.
 .cache/
