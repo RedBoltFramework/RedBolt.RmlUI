@@ -28,8 +28,8 @@ return ExternalModulePackager.Run(args, new ExternalModulePackageManifest
     ],
     ResourcePackages =
     [
-        new("RedBolt.RmlUI.CoreData", "CoreData", "bin/CoreData"),
-        new("RedBolt.RmlUI.Data", "Data", "bin/Data")
+        new("RedBolt.RmlUI.CoreData", "CoreData.RmlUI", "bin/CoreData.RmlUI"),
+        new("RedBolt.RmlUI.Data", "Data.RmlUI", "bin/Data.RmlUI")
     ],
     ManagedPackages =
     [

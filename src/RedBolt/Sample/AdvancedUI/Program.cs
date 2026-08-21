@@ -372,7 +372,7 @@ internal sealed class AdvancedUIApplication : Application
         parameters.ApplicationName = "RedBolt.Sample.AdvancedUI";
         parameters.Borderless = false;
         parameters.FullScreen = false;
-        parameters.ResourcePaths = "CoreData;Data;Base/CoreData;Base/Data";
+        parameters.ResourcePaths = "CoreData.RmlUI;Data.RmlUI;CoreData;Data";
         parameters.ResourcePrefixPaths = ".;..";
         parameters.WindowMaximize = false;
 #if !REDBOLT_PLATFORM_BROWSER

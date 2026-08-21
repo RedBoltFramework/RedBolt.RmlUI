@@ -9,10 +9,10 @@
     "src/RedBolt/RmlUI/RedBolt.RmlUI.csproj"
   ],
   "coreData": [
-    "bin/CoreData/**/*"
+    "bin/CoreData.RmlUI/**/*"
   ],
   "data": [
-    "bin/Data/**/*"
+    "bin/Data.RmlUI/**/*"
   ],
   "webPInvokeModules": [
     "RedBolt.Native.RmlUi"
