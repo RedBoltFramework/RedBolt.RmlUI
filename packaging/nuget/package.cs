@@ -29,7 +29,7 @@ return ExternalModulePackager.Run(args, new ExternalModulePackageManifest
     ResourcePackages =
     [
         new("RedBolt.RmlUI.CoreData", "CoreData.RmlUI", "bin/CoreData.RmlUI"),
-        new("RedBolt.RmlUI.Data", "Data.RmlUI", "bin/Data.RmlUI")
+        new("RedBolt.RmlUI.SampleData", "SampleData.RmlUI", "bin/SampleData.RmlUI")
     ],
     ManagedPackages =
     [
@@ -46,7 +46,7 @@ return ExternalModulePackager.Run(args, new ExternalModulePackageManifest
                 new("SharpCpp.Std", PackageVersions.RedBolt),
                 new("SharpCpp.Support", PackageVersions.RedBolt),
                 new("RedBolt.RmlUI.CoreData", PackageVersions.Module),
-                new("RedBolt.RmlUI.Data", PackageVersions.Module)
+                new("RedBolt.RmlUI.SampleData", PackageVersions.Module)
             ])
     ],
     RuntimePackage = new(

@@ -20,7 +20,7 @@ For a copy, see <https://opensource.org/licenses/MIT> or the accompanying LICENS
     <Compile Include="../AdvancedUI/**/*.cs" Link="Samples/RedBoltRmlUI/AdvancedUI/%(RecursiveDir)%(Filename)%(Extension)" />
     <Compile Include="../HelloRmlUI/**/*.cs" Link="Samples/RedBoltRmlUI/HelloRmlUI/%(RecursiveDir)%(Filename)%(Extension)" />
     <AndroidAsset Include="../../../../bin/CoreData.RmlUI/**/*" Link="CoreData/%(RecursiveDir)%(Filename)%(Extension)" />
-    <AndroidAsset Include="../../../../bin/Data.RmlUI/**/*" Link="Data/%(RecursiveDir)%(Filename)%(Extension)" />
+    <AndroidAsset Include="../../../../bin/SampleData.RmlUI/**/*" Link="SampleData/%(RecursiveDir)%(Filename)%(Extension)" />
     <!-- </redbolt-generated name="android-project-items"> -->
   </ItemGroup>
   <!-- <redbolt-generated name="android-project-import"> -->

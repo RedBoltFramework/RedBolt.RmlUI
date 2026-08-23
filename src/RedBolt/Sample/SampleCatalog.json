@@ -11,8 +11,8 @@
   "coreData": [
     "bin/CoreData.RmlUI/**/*"
   ],
-  "data": [
-    "bin/Data.RmlUI/**/*"
+  "sampleData": [
+    "bin/SampleData.RmlUI/**/*"
   ],
   "webPInvokeModules": [
     "RedBolt.Native.RmlUi"
