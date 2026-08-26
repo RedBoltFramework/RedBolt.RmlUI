@@ -23,11 +23,12 @@ body
 
 #window
 {
-    background: #354343;
-    border-top: 2dp #3d574a;
-    border-bottom: 2dp #3d574a;
-    border-left: 2dp #2b3939;
-    border-right: 2dp #2b3939;
+    decorator: image(/ThirdParty/KenneyUI/button_rectangle_depth_gradient.png);
+    background: #173a5e;
+    border-top: 2dp #7dc9ff;
+    border-bottom: 2dp #16304b;
+    border-left: 2dp #4da3db;
+    border-right: 2dp #16304b;
     padding: 8dp;
     border-radius: 6dp;
     min-width: 100dp;
@@ -66,9 +67,9 @@ body
 button,
 input.submit
 {
-    border: 1dp #45614a;
-    border-top: 1dp #688762;
-    decorator: gradient(vertical #3c5c4a #25413a);
+    border: 1dp #b9e4ff;
+    border-top: 1dp #ffffff;
+    decorator: image(/ThirdParty/KenneyUI/button_rectangle_gradient.png);
     display: inline-block;
     text-align: center;
     padding: 4dp 8dp;
@@ -80,15 +81,15 @@ input.submit
 button:hover,
 input.submit:hover
 {
-    border: 1dp #45614a;
-    border-top: 1dp #688762;
-    decorator: gradient(vertical #3b785a #225b4b);
+    border: 1dp #ffffff;
+    border-top: 1dp #ffffff;
+    decorator: image(/ThirdParty/KenneyUI/button_rectangle_depth_gradient.png);
 }
 
 button:active,
 input.submit:active
 {
-    decorator: gradient(vertical #225b4b #3b785a);
+    decorator: image(/ThirdParty/KenneyUI/button_rectangle_depth_gradient.png);
 }
 
 input.submit:disabled
@@ -166,7 +167,7 @@ input.radio:checked:hover
 
 input.checkbox:checked
 {
-    decorator: image(check-mark);
+    decorator: image(/ThirdParty/KenneyUI/check_square_color_checkmark.png);
 }
 input.radio:checked
 {
