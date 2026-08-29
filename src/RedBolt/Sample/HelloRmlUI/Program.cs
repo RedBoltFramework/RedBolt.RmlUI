@@ -94,7 +94,7 @@ public partial class SimpleWindow : RmlUIComponent
         base.Update(timeStep);
 
         // Animate progressbars
-        _progress = (MathDefs.Sin(GetSubsystem<Time>()!.GetElapsedTime() * 50.0f) + 1.0f) / 2.0f;
+        _progress = (MathDefs.Sin(GetSubsystem<Time>()!.GetElapsedTime() * 1.4f) + 1.0f) / 2.0f;
         DirtyVariable("progress");
     }
 
@@ -126,9 +126,9 @@ public partial class SimpleWindow : RmlUIComponent
     }
 
     /// <summary>Value of UI slider.</summary>
-    protected int _sliderValue;
+    protected int _sliderValue = 32;
     /// <summary>Value of button click counter.</summary>
-    protected int _counter;
+    protected int _counter = 7;
     /// <summary>Value of progressbar progress.</summary>
     protected float _progress;
     /// <summary>Value of Urho3D::Variant type.</summary>
@@ -137,6 +137,46 @@ public partial class SimpleWindow : RmlUIComponent
     protected readonly VariantVector _variantVector = [];
     /// <summary>Value of Urho3D::VariantMap type.</summary>
     protected readonly VariantMap _variantMap = [];
+}
+
+/// <summary>A compact RmlUI document rendered to a texture on a 3D object.</summary>
+[Reflected]
+public partial class WorldStatusPanel : RmlUIComponent
+{
+    /// <summary>Raised when the world-space button requests the full showcase.</summary>
+    public event Action? ShowcaseRequested;
+
+    /// <summary>Construct.</summary>
+    public WorldStatusPanel()
+    {
+        SetResource("UI/HelloRmlUI_World.rml");
+    }
+
+    /// <summary>Update the live signal indicator.</summary>
+    public override void Update(float timeStep)
+    {
+        base.Update(timeStep);
+
+        _progress = 0.72f + MathDefs.Sin(GetSubsystem<Time>()!.GetElapsedTime() * 1.8f) * 0.18f;
+        DirtyVariable("progress");
+    }
+
+    /// <summary>Open the showcase from the button remapped onto the 3D surface.</summary>
+    public void OpenShowcase(VariantVector arguments)
+    {
+        ShowcaseRequested?.Invoke();
+    }
+
+    /// <summary>Initialize the world-space document model.</summary>
+    protected override void OnDataModelInitialized()
+    {
+        BindDataModelProperty("progress",
+            (ref CoreVariant value) => value = new CoreVariant(_progress),
+            (in CoreVariant value) => _progress = value.GetFloat());
+        BindDataModelEvent("open_showcase", OpenShowcase);
+    }
+
+    private float _progress = 0.72f;
 }
 
 /// <summary>A RmlUI demonstration.</summary>
@@ -158,8 +198,6 @@ public sealed class HelloRmlUI : Application
         Context.RegisterSubsystem(_ui);
         if (Engine.Parameters.LoadFonts)
             _ui.ReloadFonts();
-        _ui.SetScale(GetSubsystem<RenderDevice>()!.GetDpiScale());
-
         // Execute base class startup
         base.Start();
 
@@ -183,39 +221,71 @@ public sealed class HelloRmlUI : Application
         _scene.CreateComponent<Octree>();
         var zone = _scene.CreateComponent<Zone>();
         zone.SetBoundingBox(new BoundingBox(-1000.0f, 1000.0f));
-        zone.SetFogColor(Color.Gray);
+        zone.SetAmbientColor(new Color(0.08f, 0.13f, 0.16f));
+        zone.SetFogColor(new Color(0.025f, 0.055f, 0.07f));
         zone.SetFogStart(100.0f);
         zone.SetFogEnd(300.0f);
 
-        // Create a child scene node (at world origin) and a StaticModel component into it.
-        var boxNode = _scene.CreateChild("Box");
-        boxNode.SetScale(new Vector3f(5.0f, 5.0f, 5.0f));
-        boxNode.SetRotation(new Quaternion(90.0f, Vector3f.Left));
+        // Build the display from a solid casing and a separate front-facing plane.
+        // Only the plane receives the UI texture, so the casing edges remain stable.
+        _environmentMaterial = new Material();
+        _environmentMaterial.SetTechnique(0, cache.Get<Technique>("Techniques/DiffUnlit.xml"));
+        _environmentMaterial.SetShaderParameter("MatDiffColor", new Vector4f(0.055f, 0.14f, 0.16f, 1.0f));
 
-        // Create a box model and hide it initially.
-        var boxModel = boxNode.CreateComponent<StaticModel>();
-        boxModel.SetModel(cache.Get<Model>("Models/Box.mdl"));
+        var displayNode = _scene.CreateChild("Display");
+        displayNode.SetPosition(new Vector3f(3.4f, 0.0f, 0.0f));
+        displayNode.SetRotation(new Quaternion(2.0f, -12.0f, 0.0f));
+
+        var casingNode = displayNode.CreateChild("DisplayCasing");
+        casingNode.SetScale(new Vector3f(4.32f, 3.52f, 0.18f));
+        var casingModel = casingNode.CreateComponent<StaticModel>();
+        casingModel.SetModel(cache.Get<Model>("Models/Box.mdl"));
+        casingModel.SetMaterial(_environmentMaterial);
+
+        var screenNode = displayNode.CreateChild("Screen");
+        screenNode.SetPosition(new Vector3f(0.0f, 0.0f, -0.095f));
+        screenNode.SetRotation(new Quaternion(-90.0f, 0.0f, 0.0f));
+        screenNode.SetScale(new Vector3f(4.2f, 1.0f, 3.4f));
+        var screenModel = screenNode.CreateComponent<StaticModel>();
+        screenModel.SetModel(cache.Get<Model>("Models/Plane.mdl"));
+
+        // Mount the display on a simple pedestal for clear scene context.
+
+        var standNode = _scene.CreateChild("DisplayStand");
+        standNode.SetPosition(new Vector3f(3.4f, -2.05f, 0.35f));
+        standNode.SetScale(new Vector3f(0.28f, 0.9f, 0.32f));
+        var standModel = standNode.CreateComponent<StaticModel>();
+        standModel.SetModel(cache.Get<Model>("Models/Box.mdl"));
+        standModel.SetMaterial(_environmentMaterial);
+
+        var baseNode = _scene.CreateChild("DisplayBase");
+        baseNode.SetPosition(new Vector3f(3.4f, -2.55f, 0.35f));
+        baseNode.SetScale(new Vector3f(1.8f, 0.16f, 0.9f));
+        var baseModel = baseNode.CreateComponent<StaticModel>();
+        baseModel.SetModel(cache.Get<Model>("Models/Box.mdl"));
+        baseModel.SetMaterial(_environmentMaterial);
 
         // Create a camera.
         _cameraNode = _scene.CreateChild("Camera");
         _cameraNode.CreateComponent<Camera>();
+        _cameraController = _cameraNode.CreateComponent<FreeFlyController>();
+        _cameraController.SetSpeed(3.0f);
+        _cameraController.SetAcceleratedSpeed(8.0f);
+        _cameraController.SetEnabled(false);
 
-        // Set an initial position for the camera scene node.
-        _cameraNode.SetPosition(new Vector3f(0.0f, 0.0f, -10.0f));
+        // Begin farther away and centered on the world-space display. The intro
+        // moves toward it before handing camera control to the user.
+        _cameraNode.SetPosition(new Vector3f(3.4f, 0.0f, -16.0f));
 
         // Set up a viewport so 3D scene can be visible.
         Renderer.SetViewport(0, new Viewport(_scene, _cameraNode.GetComponent<Camera>()!));
     }
 
-    /// <summary>Initialize UI subsystems, backbuffer and cube windows.</summary>
+    /// <summary>Initialize the world-space UI. The full showcase opens on demand.</summary>
     private void InitWindow()
     {
-        // Create a window rendered into backbuffer.
-        var window = _scene!.CreateComponent<SimpleWindow>();
-        _window = new WeakReference<SimpleWindow>(window);
-
         // Node that will get UI rendered on it.
-        var boxNode = _scene.GetChild("Box")!;
+        var screenNode = _scene!.GetChild("Display")!.GetChild("Screen")!;
 
         // Create a texture we will render to.
         _texture = new Texture2D();
@@ -224,22 +294,45 @@ public sealed class HelloRmlUI : Application
         _material = new Material();
         _material.SetTechnique(0, Resources.Get<Technique>("Techniques/DiffUnlit.xml"));
         _material.SetTexture("Albedo", _texture);
+        _material.SetDepthBias(new BiasParameters(-0.001f, 0.0f));
 
         // Create a component that sets up UI rendering.
-        var canvas = boxNode.CreateComponent<RmlCanvasComponent>();
+        var canvas = screenNode.CreateComponent<RmlCanvasComponent>();
         canvas.SetTexture(_texture);
         canvas.SetUISize(new Vector2i(512, 512));
         canvas.SetRemapMousePos(true);
 
-        // Create a window that will be rendered on a cube.
-        var windowOnCube = boxNode.CreateComponent<SimpleWindow>();
-        _windowOnCube = new WeakReference<SimpleWindow>(windowOnCube);
+        // Create a compact document that will be rendered on the 3D display.
+        var windowOnCube = screenNode.CreateComponent<WorldStatusPanel>();
+        windowOnCube.ShowcaseRequested += RequestShowcase;
+        _windowOnCube = new WeakReference<WorldStatusPanel>(windowOnCube);
 
         // Create a StaticModel for our cube.
-        var model = boxNode.GetComponent<StaticModel>()!;
+        var model = screenNode.GetComponent<StaticModel>()!;
 
         // And set a material to it so UI would be rendered on to cube.
         model.SetMaterial(_material);
+    }
+
+    /// <summary>Begin the camera reveal that makes room for the full UI showcase.</summary>
+    private void RequestShowcase()
+    {
+        if (_showcaseRequested)
+            return;
+
+        _showcaseRequested = true;
+        _showcaseTransitionTime = 0.0f;
+        _showcaseTransitionStart = _cameraNode!.GetPosition();
+        _cameraController?.SetEnabled(false);
+    }
+
+    /// <summary>Create the full screen-space UI after the world-space interaction.</summary>
+    private void OpenShowcase()
+    {
+        var window = _scene!.CreateComponent<SimpleWindow>();
+        _window = new WeakReference<SimpleWindow>(window);
+        _showcaseOpened = true;
+        _cameraController?.SetEnabled(true);
     }
 
     /// <summary>Animate cube, handle keys.</summary>
@@ -251,11 +344,43 @@ public sealed class HelloRmlUI : Application
             return;
         }
 
-        // Animate cube.
-        var node = _scene!.GetChild("Box")!;
-        node.Yaw(6.0f * timeStep * 1.5f);
-        node.Roll(-6.0f * timeStep * 1.5f);
-        node.Pitch(-6.0f * timeStep * 1.5f);
+        // Keyboard fallback for accessibility and automated sample runs. The
+        // primary interaction remains the button rendered on the 3D surface.
+        if (!_showcaseRequested && Input.GetKeyPress(Key.Space))
+            RequestShowcase();
+
+        // Keep the world-space display moving subtly while it remains readable.
+        var node = _scene!.GetChild("Display")!;
+        var elapsedTime = GetSubsystem<Time>()!.GetElapsedTime();
+        node.SetRotation(new Quaternion(
+            2.0f + MathDefs.Sin(elapsedTime * 0.7f) * 1.5f,
+            -12.0f + MathDefs.Sin(elapsedTime * 0.45f) * 4.0f,
+            MathDefs.Sin(elapsedTime * 0.55f)));
+
+        if (!_showcaseRequested)
+        {
+            _introTime = MathF.Min(_introTime + timeStep, IntroDuration);
+            var progress = _introTime / IntroDuration;
+            var easedProgress = MathDefs.SmoothStep(0.0f, 1.0f, progress);
+            _cameraNode!.SetPosition(new Vector3f(
+                3.4f,
+                0.0f,
+                -16.0f + 6.0f * easedProgress));
+            if (_introTime >= IntroDuration)
+                _cameraController?.SetEnabled(true);
+        }
+        else if (!_showcaseOpened)
+        {
+            _showcaseTransitionTime = MathF.Min(_showcaseTransitionTime + timeStep, ShowcaseTransitionDuration);
+            var progress = _showcaseTransitionTime / ShowcaseTransitionDuration;
+            var easedProgress = MathDefs.SmoothStep(0.0f, 1.0f, progress);
+            _cameraNode!.SetPosition(new Vector3f(
+                _showcaseTransitionStart.X * (1.0f - easedProgress),
+                _showcaseTransitionStart.Y * (1.0f - easedProgress),
+                _showcaseTransitionStart.Z + (-10.0f - _showcaseTransitionStart.Z) * easedProgress));
+            if (_showcaseTransitionTime >= ShowcaseTransitionDuration)
+                OpenShowcase();
+        }
 
         if (Input.GetKeyPress(Key.F9))
             _ui!.SetDebuggerVisible(!_ui.IsDebuggerVisible());
@@ -282,10 +407,13 @@ public sealed class HelloRmlUI : Application
         _window = null;
         _windowOnCube = null;
         _cameraNode = null;
+        _cameraController = null;
         _scene?.Dispose();
         _scene = null;
         _material?.Dispose();
         _material = null;
+        _environmentMaterial?.Dispose();
+        _environmentMaterial = null;
         _texture?.Dispose();
         _texture = null;
         Context.RemoveSubsystem<RmlUISubsystem>();
@@ -301,10 +429,13 @@ public sealed class HelloRmlUI : Application
         _window = null;
         _windowOnCube = null;
         _cameraNode = null;
+        _cameraController = null;
         _scene?.Dispose();
         _scene = null;
         _material?.Dispose();
         _material = null;
+        _environmentMaterial?.Dispose();
+        _environmentMaterial = null;
         _texture?.Dispose();
         _texture = null;
         Context.RemoveSubsystem<RmlUISubsystem>();
@@ -316,12 +447,21 @@ public sealed class HelloRmlUI : Application
     /// <summary>Window which will be rendered into backbuffer.</summary>
     private WeakReference<SimpleWindow>? _window;
     /// <summary>Window which will be rendered onto a side of a cube.</summary>
-    private WeakReference<SimpleWindow>? _windowOnCube;
+    private WeakReference<WorldStatusPanel>? _windowOnCube;
     /// <summary>Texture to which windowOnCube_ will render.</summary>
     private Texture2D? _texture;
     /// <summary>Material which will apply windowOnCube_ on to a cube.</summary>
     private Material? _material;
+    private Material? _environmentMaterial;
     private RmlUISubsystem? _ui;
     private Scene? _scene;
     private Node? _cameraNode;
+    private FreeFlyController? _cameraController;
+    private Vector3f _showcaseTransitionStart;
+    private float _introTime;
+    private float _showcaseTransitionTime;
+    private bool _showcaseRequested;
+    private bool _showcaseOpened;
+    private const float IntroDuration = 2.4f;
+    private const float ShowcaseTransitionDuration = 0.8f;
 }

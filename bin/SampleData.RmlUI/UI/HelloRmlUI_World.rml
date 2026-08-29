@@ -1,0 +1,21 @@
+<rml>
+<head>
+    <title>World-space RmlUI Panel</title>
+    <link type="text/rcss" href="rml.rcss"/>
+    <link type="text/rcss" href="fantasy.rcss"/>
+</head>
+
+<body id="world-screen" data-model="{{__data_model_id}}">
+    <span class="eyebrow">World-space interface</span>
+    <h1 class="world-title">Arcane relay</h1>
+        <p class="world-copy">Live RmlUI rendered to a texture on this moving 3D mesh.</p>
+    <div class="ornament"></div>
+
+    <div class="world-card">
+        <span class="control-label">Signal strength</span>
+        <progress class="horizontal" data-value="progress"/>
+    </div>
+
+    <button class="primary" data-event-click="open_showcase">Open interface showcase</button>
+</body>
+</rml>

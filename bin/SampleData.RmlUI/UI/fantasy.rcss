@@ -1,0 +1,780 @@
+/*
+ * Fantasy RmlUI skin built with Kenney's Fantasy UI Borders (CC0).
+ * The source assets and their license are in Textures/FantasyUI.
+ */
+
+@spritesheet fantasy-window
+{
+    src: /Textures/FantasyUI/frame-ornate.png;
+    fantasy-window-outer: 0px 0px 96px 96px;
+    fantasy-window-inner: 20px 20px 56px 56px;
+}
+
+@spritesheet fantasy-corners
+{
+    src: /Textures/FantasyUI/frame-corners.png;
+    fantasy-corners-outer: 0px 0px 48px 48px;
+    fantasy-corners-inner: 12px 12px 24px 24px;
+}
+
+@spritesheet fantasy-brackets
+{
+    src: /Textures/FantasyUI/frame-brackets.png;
+    fantasy-brackets-outer: 0px 0px 48px 48px;
+    fantasy-brackets-inner: 12px 12px 24px 24px;
+}
+
+@spritesheet fantasy-scalloped
+{
+    src: /Textures/FantasyUI/frame-scalloped.png;
+    fantasy-scalloped-outer: 0px 0px 48px 48px;
+    fantasy-scalloped-inner: 16px 16px 16px 16px;
+}
+
+@spritesheet fantasy-round
+{
+    src: /Textures/FantasyUI/frame-round.png;
+    fantasy-round-outer: 0px 0px 48px 48px;
+    fantasy-round-inner: 12px 12px 24px 24px;
+}
+
+@spritesheet fantasy-simple
+{
+    src: /Textures/FantasyUI/frame-simple.png;
+    fantasy-simple-outer: 0px 0px 48px 48px;
+    fantasy-simple-inner: 8px 8px 32px 32px;
+}
+
+@spritesheet fantasy-badge
+{
+    src: /Textures/FantasyUI/frame-badge.png;
+    fantasy-badge-outer: 0px 0px 48px 48px;
+    fantasy-badge-inner: 14px 14px 20px 20px;
+}
+
+@spritesheet fantasy-icons
+{
+    src: /Textures/RmlUI-1x.png;
+    fantasy-arrow-down: 36dp 0dp 16dp 16dp;
+    fantasy-radio-dot: 20dp 16dp 16dp 16dp;
+    fantasy-check-mark: 36dp 16dp 16dp 16dp;
+}
+
+body
+{
+    color: #e9e0cc;
+    display: inline-block;
+    font-family: "Noto Sans";
+    font-size: 14dp;
+    font-style: normal;
+    font-weight: normal;
+    overflow: hidden;
+}
+
+#window
+{
+    background: #101820;
+    bottom: 18dp;
+    decorator: ninepatch(fantasy-window-outer, fantasy-window-inner, 14dp), vertical-gradient(#1b2c34 #0c141b);
+    image-color: #d4aa5e;
+    left: 18dp;
+    min-height: 300dp;
+    min-width: 360dp;
+    padding: 20dp;
+    position: absolute;
+    right: 18dp;
+    top: 18dp;
+}
+
+#titlebar
+{
+    height: 30dp;
+    margin: -10dp -8dp 8dp -8dp;
+    padding: 4dp 42dp 4dp 10dp;
+}
+
+#titlebar handle
+{
+    display: block;
+    height: 100%;
+}
+
+#titlebar #title
+{
+    color: #f2cf83;
+    display: inline-block;
+    font-size: 12dp;
+    letter-spacing: 2dp;
+    text-transform: uppercase;
+    width: 100%;
+}
+
+#content
+{
+    bottom: 18dp;
+    left: 18dp;
+    margin: 0;
+    overflow: hidden auto;
+    position: absolute;
+    right: 18dp;
+    top: 48dp;
+}
+
+.close-window
+{
+    background: #552b2b;
+    color: #f7e6c0;
+    decorator: ninepatch(fantasy-simple-outer, fantasy-simple-inner, 5dp), vertical-gradient(#7d3b35 #3b1d24);
+    height: 22dp;
+    image-color: #e4bd72;
+    min-height: 0;
+    padding: 0;
+    position: absolute;
+    right: 1dp;
+    top: 0;
+    width: 24dp;
+}
+
+.close-window:hover
+{
+    background: #7a3431;
+    image-color: #fff1bd;
+}
+
+.close-window:active
+{
+    background: #35171b;
+    color: #c9a55d;
+    padding: 0;
+}
+
+.showcase
+{
+    padding: 0 3dp 12dp 3dp;
+}
+
+.eyebrow
+{
+    color: #6fd3dc;
+    font-size: 10dp;
+    letter-spacing: 2dp;
+    text-transform: uppercase;
+}
+
+.hero-title
+{
+    color: #fff2cf;
+    font-size: 28dp;
+    font-weight: bold;
+    letter-spacing: 1dp;
+    margin: 1dp 0 2dp 0;
+}
+
+.hero-copy
+{
+    color: #9fb3b7;
+    margin: 0;
+}
+
+.ornament,
+.ornament-small
+{
+    decorator: image(/Textures/FantasyUI/divider-fade.png contain center);
+    height: 18dp;
+    image-color: #c69d52;
+    margin: 5dp auto;
+    width: 210dp;
+}
+
+.ornament-small
+{
+    decorator: image(/Textures/FantasyUI/divider-ornate.png contain center);
+    height: 10dp;
+    margin: 4dp auto 8dp auto;
+    width: 150dp;
+}
+
+.feature-row,
+.showcase-grid,
+.control-row,
+.check-row,
+.status-row
+{
+    display: flex;
+    gap: 10dp;
+}
+
+.feature-row
+{
+    margin: 6dp 0 12dp 0;
+}
+
+.feature
+{
+    background: #14232b;
+    decorator: ninepatch(fantasy-corners-outer, fantasy-corners-inner, 6dp), vertical-gradient(#1b3038 #111d24);
+    flex: 1 1 0;
+    image-color: #536f70;
+    min-width: 0;
+    padding: 10dp 12dp;
+}
+
+.feature strong
+{
+    color: #e9c879;
+    display: block;
+    font-size: 12dp;
+    letter-spacing: 1dp;
+    text-transform: uppercase;
+}
+
+.feature span
+{
+    color: #93a8aa;
+    font-size: 11dp;
+}
+
+.showcase-grid
+{
+    align-items: stretch;
+    gap: 12dp;
+}
+
+.panel
+{
+    background: #111c23;
+    decorator: ninepatch(fantasy-corners-outer, fantasy-corners-inner, 6dp), vertical-gradient(#172832 #0d171e);
+    flex: 1 1 0;
+    image-color: #9b7a42;
+    min-width: 0;
+    padding: 15dp;
+}
+
+.panel-title
+{
+    color: #f4d792;
+    font-size: 15dp;
+    font-weight: bold;
+    letter-spacing: 1dp;
+    margin-bottom: 3dp;
+    text-transform: uppercase;
+}
+
+.panel-copy,
+.hint
+{
+    color: #82979b;
+    font-size: 11dp;
+}
+
+.control-group
+{
+    margin-top: 12dp;
+}
+
+.check-row
+{
+    align-items: center;
+    min-height: 22dp;
+}
+
+.check-row + .check-row
+{
+    margin-top: 3dp;
+}
+
+.check-row select
+{
+    margin-left: auto;
+}
+
+.control-label
+{
+    color: #9db2b3;
+    display: block;
+    font-size: 10dp;
+    letter-spacing: 1dp;
+    margin-bottom: 4dp;
+    text-transform: uppercase;
+}
+
+*:disabled
+{
+    color: #5e6a6c;
+    cursor: unavailable;
+    image-color: #526164;
+}
+
+button,
+input.submit
+{
+    background: #244c55;
+    color: #f5ead0;
+    decorator: ninepatch(fantasy-simple-outer, fantasy-simple-inner, 5dp), vertical-gradient(#2c5961 #18343c);
+    display: inline-block;
+    image-color: #9ec8c5;
+    min-height: 28dp;
+    padding: 7dp 12dp 3dp 12dp;
+    tab-index: auto;
+    text-align: center;
+}
+
+button.primary,
+input.submit.primary
+{
+    background: #77552d;
+    image-color: #f0cc7a;
+}
+
+button:hover,
+input.submit:hover
+{
+    background: #326672;
+    image-color: #d8f5ec;
+}
+
+button.primary:hover,
+input.submit.primary:hover
+{
+    background: #946b35;
+    image-color: #fff0af;
+}
+
+button:active,
+input.submit:active
+{
+    background: #142d35;
+    color: #b9d1ce;
+    image-color: #6e8e8d;
+    padding-top: 8dp;
+    padding-bottom: 2dp;
+}
+
+input.submit:disabled,
+button:disabled
+{
+    background: #202b2e;
+    image-color: #526164;
+}
+
+textarea,
+input.text,
+input.password,
+select
+{
+    background: #091218;
+    color: #dce8e5;
+    decorator: ninepatch(fantasy-simple-outer, fantasy-simple-inner, 6dp), vertical-gradient(#0b161d #12232b);
+    image-color: #557477;
+    padding: 5dp 8dp;
+}
+
+textarea:hover,
+input.text:hover,
+input.password:hover,
+select:hover,
+textarea:focus,
+input.text:focus,
+input.password:focus,
+select:focus
+{
+    image-color: #83b8b6;
+}
+
+textarea
+{
+    box-sizing: border-box;
+    display: block;
+    min-height: 52dp;
+    min-width: 180dp;
+    width: 100%;
+}
+
+input.text,
+input.password
+{
+    height: 20dp;
+}
+
+select
+{
+    height: 27dp;
+    min-width: 110dp;
+    padding: 5dp 7dp 0 7dp;
+}
+
+select selectarrow
+{
+    background: #253e45;
+    color: #d8bc7a;
+    decorator: image(fantasy-arrow-down contain center), ninepatch(fantasy-badge-outer, fantasy-badge-inner, 5dp);
+    image-color: #b89351;
+    width: 23dp;
+}
+
+select selectbox
+{
+    background: #101c22;
+    decorator: ninepatch(fantasy-simple-outer, fantasy-simple-inner, 6dp), vertical-gradient(#17262d #0c151a);
+    image-color: #6f8c89;
+    padding: 5dp;
+}
+
+select selectbox option
+{
+    padding: 4dp 7dp;
+}
+
+select selectbox option:hover
+{
+    background: #2b4a50;
+    color: #fff1ca;
+}
+
+input.checkbox,
+input.radio
+{
+    background: #0b151a;
+    decorator: ninepatch(fantasy-simple-outer, fantasy-simple-inner, 5dp);
+    height: 18dp;
+    image-color: #668483;
+    margin-right: 4dp;
+    vertical-align: -4dp;
+    width: 18dp;
+}
+
+input.radio
+{
+    border-radius: 0.5em;
+}
+
+input.checkbox:hover,
+input.radio:hover
+{
+    background: #19353b;
+    image-color: #9dc4bd;
+}
+
+input.checkbox:checked
+{
+    background: #173039;
+    decorator: image(fantasy-check-mark contain center), ninepatch(fantasy-simple-outer, fantasy-simple-inner, 5dp);
+    image-color: #f3dd9f;
+}
+
+input.radio:checked
+{
+    background: #173039;
+    decorator: image(fantasy-radio-dot contain center), ninepatch(fantasy-simple-outer, fantasy-simple-inner, 5dp);
+    image-color: #f3dd9f;
+}
+
+input.range
+{
+    background: #091317;
+    decorator: ninepatch(fantasy-simple-outer, fantasy-simple-inner, 5dp), vertical-gradient(#081116 #1b3137);
+    height: 12dp;
+    image-color: #496567;
+    width: 145dp;
+}
+
+input.range sliderarrowinc,
+input.range sliderarrowdec
+{
+    display: none;
+}
+
+input.range > sliderbar
+{
+    background: #cba85e;
+    decorator: ninepatch(fantasy-simple-outer, fantasy-simple-inner, 4dp), vertical-gradient(#e0c476 #80602f);
+    height: 16dp;
+    image-color: #fff0aa;
+    margin-top: -2dp;
+    width: 12dp;
+}
+
+input.range > sliderbar:hover
+{
+    background: #ead07c;
+    image-color: #fff8d2;
+}
+
+input.range > sliderbar:active
+{
+    background: #8a642d;
+}
+
+progress
+{
+    background: #091317;
+    decorator: ninepatch(fantasy-simple-outer, fantasy-simple-inner, 5dp), vertical-gradient(#081116 #17282e);
+    display: block;
+    image-color: #4d6a6b;
+}
+
+progress.horizontal
+{
+    height: 18dp;
+    width: 100%;
+}
+
+progress.vertical
+{
+    height: 74dp;
+    width: 18dp;
+}
+
+progress fill
+{
+    background: #3ca4a7;
+    decorator: horizontal-gradient(#55c1ba #2b737b);
+    margin: 4dp;
+}
+
+scrollbarvertical,
+scrollbarhorizontal
+{
+    background: #091317;
+    image-color: #4d6869;
+}
+
+scrollbarvertical
+{
+    width: 13dp;
+}
+
+scrollbarhorizontal
+{
+    height: 13dp;
+}
+
+scrollbarvertical sliderarrowinc,
+scrollbarvertical sliderarrowdec,
+scrollbarhorizontal sliderarrowinc,
+scrollbarhorizontal sliderarrowdec
+{
+    background: #223a40;
+    decorator: ninepatch(fantasy-simple-outer, fantasy-simple-inner, 4dp);
+    height: 13dp;
+    image-color: #678785;
+    width: 13dp;
+}
+
+scrollbarvertical > sliderbar,
+scrollbarhorizontal > sliderbar
+{
+    background: #785c34;
+    decorator: ninepatch(fantasy-simple-outer, fantasy-simple-inner, 4dp);
+    image-color: #c4a35e;
+}
+
+scrollbarhorizontal > sliderbar
+{
+    width: auto;
+}
+
+scrollbarvertical > sliderbar
+{
+    height: auto;
+}
+
+.badge
+{
+    background: #1d3940;
+    color: #8ed7d5;
+    decorator: ninepatch(fantasy-badge-outer, fantasy-badge-inner, 7dp), vertical-gradient(#24464d #13272e);
+    display: inline-block;
+    font-size: 10dp;
+    image-color: #70aaa8;
+    letter-spacing: 1dp;
+    padding: 4dp 10dp;
+    text-transform: uppercase;
+}
+
+.status-row
+{
+    align-items: center;
+    margin-top: 8dp;
+}
+
+.stat
+{
+    flex: 1 1 0;
+}
+
+.stat-value
+{
+    color: #f1d289;
+    display: block;
+    font-size: 17dp;
+    font-weight: bold;
+}
+
+.stat-label
+{
+    color: #71898d;
+    display: block;
+    font-size: 9dp;
+    letter-spacing: 1dp;
+    text-transform: uppercase;
+}
+
+.sample-table
+{
+    margin-top: 10dp;
+    width: 100%;
+}
+
+.sample-table td
+{
+    border-bottom: 1dp #263a3f;
+    color: #9db0b1;
+    padding: 4dp 6dp;
+}
+
+.sample-table td:first-child
+{
+    color: #d6bc7d;
+}
+
+.resize-handle
+{
+    bottom: 4dp;
+    cursor: resize;
+    height: 20dp;
+    position: absolute;
+    right: 4dp;
+    width: 20dp;
+}
+
+/* World-space panel shown on the 3D object. */
+#world-screen
+{
+    background: #0b141a;
+    bottom: 16dp;
+    box-sizing: border-box;
+    decorator: ninepatch(fantasy-window-outer, fantasy-window-inner, 18dp), vertical-gradient(#183039 #081116);
+    image-color: #d8b25f;
+    left: 16dp;
+    padding: 38dp;
+    position: absolute;
+    text-align: center;
+    top: 16dp;
+    width: 480dp;
+}
+
+#world-screen .eyebrow
+{
+    font-size: 15dp;
+}
+
+.world-title
+{
+    color: #fff1c8;
+    font-size: 36dp;
+    font-weight: bold;
+    letter-spacing: 2dp;
+    margin: 2dp 0;
+    text-transform: uppercase;
+}
+
+.world-copy
+{
+    color: #8fb0b2;
+    font-size: 17dp;
+}
+
+.world-card
+{
+    background: #102229;
+    decorator: ninepatch(fantasy-scalloped-outer, fantasy-scalloped-inner, 9dp), vertical-gradient(#18333a #0b191f);
+    image-color: #589496;
+    margin: 18dp 0;
+    padding: 18dp 24dp;
+    text-align: left;
+}
+
+.world-card .control-label
+{
+    font-size: 13dp;
+}
+
+.world-card progress.horizontal
+{
+    height: 24dp;
+}
+
+.world-metrics
+{
+    display: flex;
+    gap: 10dp;
+    margin-top: 15dp;
+}
+
+.world-metric
+{
+    background: #0c181e;
+    decorator: ninepatch(fantasy-round-outer, fantasy-round-inner, 7dp);
+    flex: 1 1 0;
+    image-color: #6b8883;
+    padding: 10dp 6dp;
+    text-align: center;
+}
+
+.world-metric strong
+{
+    color: #f1d17f;
+    display: block;
+    font-size: 20dp;
+}
+
+.world-metric span
+{
+    color: #769094;
+    display: block;
+    font-size: 11dp;
+    letter-spacing: 1dp;
+    text-transform: uppercase;
+}
+
+#world-screen button
+{
+    font-size: 17dp;
+    min-height: 36dp;
+    padding: 9dp 22dp 5dp 22dp;
+}
+
+@media (min-width: 1000dp)
+{
+    #window
+    {
+        bottom: auto;
+        height: 580dp;
+        right: auto;
+        width: 680dp;
+    }
+}
+
+table
+{
+    box-sizing: border-box;
+    display: table;
+}
+
+tr
+{
+    box-sizing: border-box;
+    display: table-row;
+}
+
+td
+{
+    box-sizing: border-box;
+    display: table-cell;
+}
+
+tbody
+{
+    display: table-row-group;
+}

@@ -351,8 +351,6 @@ internal sealed class AdvancedUIApplication : Application
         Context.RegisterSubsystem(_ui);
         if (Engine.Parameters.LoadFonts)
             _ui.ReloadFonts();
-        _ui.SetScale(GetSubsystem<RenderDevice>()!.GetDpiScale());
-
         base.Start();
 
         SubscribeToEvent<SampleExitRequestedEvent>((ref SampleExitRequestedEvent _) => Exit());

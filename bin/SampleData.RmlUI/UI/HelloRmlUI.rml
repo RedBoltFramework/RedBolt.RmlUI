@@ -1,56 +1,121 @@
 <rml>
 <head>
     <link type="text/template" href="HelloRmlUI_Window.rml"/>
-    <title>Sample Window</title>
-    <style>
-        button, input, select {
-            vertical-align: middle;
-        }
-    </style>
+    <title>Fantasy UI Showcase</title>
 </head>
 
-<body template="window" style="width: 300px">
-    <div data-model="{{__data_model_id}}">
-        <h1>Text Header 1</h1>
-        <h2>Text Header 2</h2>
-        <h3>Text Header 3</h3>
-        <b>Bold text</b>, <i>italic text</i>, <s><span>striked out text</span></s>.
-        <pre>
-Text
-   with
-      preserved
-         whitespaces.</pre>
-        <hr/>
-        <h3>Buttons</h3>
-        <button data-event-click="count">Clicked {{counter}} times!</button>
-        <input type="submit" disabled>Click!</input>
-        <button onclick="sound:Sounds/PlayerFist.wav">Sound!</button>
-        <h3>Inputs</h3>
-        <textarea></textarea>
-        <input type="checkbox" checked="false"/> <label>Greatness</label><br/>
-        <input type="text" value="foo"/><br/>
-        <input type="password" value="foo"/><br/>
-        <form>
-            <input type="radio" value="1"/> Radio 1<br/>
-            <input type="radio" value="2"/> Radio 2<br/>
-        </form>
-        <input type="range" min="10" max="50" step="2" data-value="slider_value"/>&nbsp;<span>{{slider_value}}</span><br/>
-        <input type="range" min="10" max="50" step="1" data-value="font_size"/>&nbsp;<span>{{font_size}}px</span><br/>
-        <select>
-            <option>Foo</option>
-            <option>Bar</option>
-        </select>
-        <h3>Variant binds</h3>
-        {{variant}}<br/>
-        <div data-for="v : variant_vector">
-        {{v}}<br/>
+<body template="window">
+    <div class="showcase" data-model="{{__data_model_id}}">
+        <span class="eyebrow">RedBolt + RmlUI</span>
+        <h1 class="hero-title">Fantasy interface kit</h1>
+        <p class="hero-copy">A complete, responsive game UI skin with live data binding and world-space rendering.</p>
+        <div class="ornament"></div>
+
+        <div class="feature-row">
+            <div class="feature">
+                <strong>Declarative</strong>
+                <span>RML structure and RCSS styling</span>
+            </div>
+            <div class="feature">
+                <strong>Reactive</strong>
+                <span>Live C# data model bindings</span>
+            </div>
+            <div class="feature">
+                <strong>World-space</strong>
+                <span>The 3D panel is interactive</span>
+            </div>
         </div>
-        {{variant_map.int}}<br/>
-        {{variant_map.str}}<br/>
-        <h3>Progress bars</h3>
-        <progress class="horizontal" data-value="progress" />
-        <progress class="vertical" direction="top" data-value="progress" style="height: 100dp;"/>
+
+        <div class="showcase-grid">
+            <section class="panel">
+                <div class="panel-title">Controls</div>
+                <div class="panel-copy">Default states, focus, and selection.</div>
+
+                <div class="control-group">
+                    <span class="control-label">Actions</span>
+                    <div class="control-row">
+                        <button class="primary" data-event-click="count">Invoke spell</button>
+                        <button onclick="sound:Sounds/PlayerFist.wav">Sound</button>
+                        <button disabled="true">Locked</button>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <span class="control-label">Text fields</span>
+                    <div class="control-row">
+                        <input type="text" value="Moonlit Vale"/>
+                        <input type="password" value="runestone"/>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <span class="control-label">Selection</span>
+                    <div class="check-row">
+                        <label><input type="checkbox" checked="true"/> Guided path</label>
+                        <label><input type="checkbox"/> Hard mode</label>
+                    </div>
+                    <div class="check-row">
+                        <label><input type="radio" name="path" value="sun" checked="true"/> Sun</label>
+                        <label><input type="radio" name="path" value="moon"/> Moon</label>
+                        <select>
+                            <option>Mage</option>
+                            <option>Ranger</option>
+                            <option>Guardian</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <span class="control-label">Message</span>
+                    <textarea>Meet the guild beyond the old stone gate.</textarea>
+                </div>
+            </section>
+
+            <section class="panel">
+                <div class="panel-title">Live telemetry</div>
+                <div class="panel-copy">Values below update through the RmlUI data model.</div>
+
+                <div class="status-row">
+                    <div class="stat">
+                        <span class="stat-value">{{counter}}</span>
+                        <span class="stat-label">Invocations</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value">{{slider_value}}</span>
+                        <span class="stat-label">Power</span>
+                    </div>
+                    <span class="badge">Connected</span>
+                </div>
+
+                <div class="control-group">
+                    <span class="control-label">Power level</span>
+                    <input type="range" min="10" max="50" step="2" data-value="slider_value"/>
+                    <span class="hint"> {{slider_value}} / 50</span>
+                </div>
+
+                <div class="control-group">
+                    <span class="control-label">Interface scale</span>
+                    <input type="range" min="12" max="22" step="1" data-value="font_size"/>
+                    <span class="hint"> {{font_size}}dp</span>
+                </div>
+
+                <div class="control-group">
+                    <span class="control-label">Arcane charge</span>
+                    <progress class="horizontal" data-value="progress"/>
+                </div>
+
+                <table class="sample-table">
+                    <tbody>
+                        <tr><td>Variant</td><td>{{variant}}</td></tr>
+                        <tr><td>Vector</td><td><span data-for="v : variant_vector">{{v}} </span></td></tr>
+                        <tr><td>Map</td><td>{{variant_map.int}} / {{variant_map.str}}</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="ornament-small"></div>
+                <div class="hint">Hold RMB and use WASD/QE to inspect the 3D panel. F9 opens the debugger.</div>
+            </section>
+        </div>
     </div>
 </body>
 </rml>
-

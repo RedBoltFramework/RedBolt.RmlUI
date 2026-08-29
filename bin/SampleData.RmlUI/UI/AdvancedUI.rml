@@ -102,7 +102,7 @@
     }
 
     .window.hidden {
-        transform: scale(0.45) translateX(-150%);
+        transform: scale(0.96) translateX(-150%);
     }
 
     button {
@@ -111,11 +111,11 @@
 
     button:hover:not([disabled]),
     button:active:not([disabled]) {
-        transform: scale(1.045);
+        transform: scale(1.0075);
     }
 
     button:active:not([disabled]) {
-        transform: scale(0.97);
+        transform: scale(0.995);
         transition: transform background-color 0.1s exponential-out 0.0;
     }
 
@@ -299,7 +299,7 @@
             </div>
         </div>
 
-        <div class="arrange-vertically">
+        <div class="arrange-vertically" data-class-hidden="current_page != 2">
             <div class="window about-window" data-class-hidden="current_page != 2">
                 <div class="about-text bg-dark">
                     <h1>AdvancedUI Sample</h1>
@@ -329,4 +329,3 @@
 </body>
 
 </rml>
-

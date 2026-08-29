@@ -722,6 +722,7 @@ public partial class RmlUI : RedObject
     private readonly RenderTargetView[] _renderTargets = new RenderTargetView[1];
     private readonly Std.String _textInput = new();
     private bool _disposed;
+    private bool _automaticScale = true;
 
     /// <summary>Construct.</summary>
     public RmlUI(string name = "master")
@@ -750,6 +751,7 @@ public partial class RmlUI : RedObject
         _rmlContext = (RmlContext)RmlUi.CreateContext(
             nativeName, GetDesiredCanvasSize())!;
         _rmlContext.SetOwnerSubsystem(this);
+        UpdateAutomaticScale();
 
         var ui = CoreContext.Instance.GetSubsystem<RmlUI>();
         if (ui is not null && !ReferenceEquals(ui, this))
@@ -893,7 +895,11 @@ public partial class RmlUI : RedObject
     public Bindings.RmlUi.Context GetRmlContext() => _rmlContext!;
 
     /// <summary>Set UI scale aka dp to px ratio. 1.0 is default (pixel perfect).</summary>
-    public void SetScale(float scale) => _rmlContext!.SetDensityIndependentPixelRatio(scale);
+    public void SetScale(float scale)
+    {
+        _automaticScale = false;
+        _rmlContext!.SetDensityIndependentPixelRatio(scale);
+    }
 
     /// <summary>Return UI scale.</summary>
     public float GetScale() => _rmlContext!.GetDensityIndependentPixelRatio();
@@ -1297,6 +1303,12 @@ public partial class RmlUI : RedObject
         return new Vector2i(512, 512);
     }
 
+    private void UpdateAutomaticScale()
+    {
+        if (_automaticScale && GetRenderSurface() is null)
+            _rmlContext!.SetDensityIndependentPixelRatio(GetSubsystem<RenderDevice>()?.GetDpiScale() ?? 1.0f);
+    }
+
     /// <summary>Return true if input is captured by this instance of RmlUI.</summary>
     private bool IsInputCapturedInternal()
     {
@@ -1324,6 +1336,7 @@ public partial class RmlUI : RedObject
     /// <summary>Handle screen mode event.</summary>
     private void HandleScreenMode(ref GraphicsEvents.ScreenModeEvent eventData)
     {
+        UpdateAutomaticScale();
         var args = new RmlCanvasResizedArgs
         {
             OldSize = _rmlContext!.GetDimensions(),
