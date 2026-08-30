@@ -22,7 +22,7 @@
     "RedBolt.Bindings.RmlUi"
   ],
   "samples": [
-    { "id": "advanced-ui", "name": "Advanced UI", "applicationType": "RedBolt.Sample.AdvancedUI.AdvancedUIApplication", "source": "AdvancedUI" },
-    { "id": "hello-rmlui", "name": "Hello RmlUI", "applicationType": "RedBolt.Sample.HelloRmlUI.HelloRmlUI", "source": "HelloRmlUI" }
+    { "id": "advanced-ui", "name": "Advanced UI", "applicationType": "RedBolt.Sample.AdvancedUI.AdvancedUIApplication", "source": "AdvancedUI", "mobileHelp": "Tap the interface directly or use the action button to open the debugger.", "mobileControls": [{ "label": "Debugger", "key": "F9" }] },
+    { "id": "hello-rmlui", "name": "Hello RmlUI", "applicationType": "RedBolt.Sample.HelloRmlUI.HelloRmlUI", "source": "HelloRmlUI", "mobileHelp": "Drag to look, use the direction pad to move, or tap the interface directly.", "mobileMovement": "wasd", "mobileControls": [{ "label": "Showcase", "key": "Space"}, {"label": "Debugger", "key": "F9" }] }
   ]
 }
