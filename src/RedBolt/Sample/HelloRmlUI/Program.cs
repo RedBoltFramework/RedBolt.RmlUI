@@ -190,6 +190,11 @@ public sealed class HelloRmlUI : Application
     /// <summary>Setup after engine initialization and before running main loop.</summary>
     protected override void Start()
     {
+        _sampleInput = new SampleInputMap(movement: true, touchExit: false);
+        _sampleInput.Map.MapKeyboardKey("Showcase", Scancode.Space);
+        _sampleInput.Map.MapControllerButton("Showcase", ControllerButton.A);
+        _sampleInput.Map.MapKeyboardKey("Debugger", Scancode.F9);
+        _sampleInput.Map.MapControllerButton("Debugger", ControllerButton.Y);
         // Register custom components.
         Audio.RegisterAudioSubsystem(Context);
         RmlUISubsystem.RegisterRmlUILibrary(Context);
@@ -269,6 +274,7 @@ public sealed class HelloRmlUI : Application
         _cameraNode = _scene.CreateChild("Camera");
         _cameraNode.CreateComponent<Camera>();
         _cameraController = _cameraNode.CreateComponent<FreeFlyController>();
+        _cameraController.SetInputMap(_sampleInput!.Map);
         _cameraController.SetSpeed(3.0f);
         _cameraController.SetAcceleratedSpeed(8.0f);
         _cameraController.SetEnabled(false);
@@ -338,7 +344,7 @@ public sealed class HelloRmlUI : Application
     /// <summary>Animate cube, handle keys.</summary>
     protected override void Update(float timeStep)
     {
-        if (Input.ExitRequested || Input.GetKeyPress(Key.Escape))
+        if (Input.ExitRequested || _sampleInput!.Pressed("Exit"))
         {
             Exit();
             return;
@@ -346,7 +352,7 @@ public sealed class HelloRmlUI : Application
 
         // Keyboard fallback for accessibility and automated sample runs. The
         // primary interaction remains the button rendered on the 3D surface.
-        if (!_showcaseRequested && Input.GetKeyPress(Key.Space))
+        if (!_showcaseRequested && _sampleInput.Pressed("Showcase"))
             RequestShowcase();
 
         // Keep the world-space display moving subtly while it remains readable.
@@ -382,7 +388,7 @@ public sealed class HelloRmlUI : Application
                 OpenShowcase();
         }
 
-        if (Input.GetKeyPress(Key.F9))
+        if (_sampleInput.Pressed("Debugger"))
             _ui!.SetDebuggerVisible(!_ui.IsDebuggerVisible());
     }
 
@@ -403,6 +409,8 @@ public sealed class HelloRmlUI : Application
 
     protected override void Stop()
     {
+        _sampleInput?.Dispose();
+        _sampleInput = null;
         Renderer.SetNumViewports(0);
         _window = null;
         _windowOnCube = null;
@@ -457,6 +465,7 @@ public sealed class HelloRmlUI : Application
     private Scene? _scene;
     private Node? _cameraNode;
     private FreeFlyController? _cameraController;
+    private SampleInputMap? _sampleInput;
     private Vector3f _showcaseTransitionStart;
     private float _introTime;
     private float _showcaseTransitionTime;

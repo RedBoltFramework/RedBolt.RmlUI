@@ -214,6 +214,9 @@ public partial class AdvancedUI : ApplicationState
     /// <summary>Setup after engine initialization and before running the main loop.</summary>
     public void Start()
     {
+        _sampleInput = new SampleInputMap(touchExit: false);
+        _sampleInput.Map.MapKeyboardKey("Debugger", Scancode.F9);
+        _sampleInput.Map.MapControllerButton("Debugger", ControllerButton.Y);
         // Register custom components.
         Context.RegisterAssembly(typeof(AdvancedUIWindow).Assembly);
 
@@ -232,6 +235,8 @@ public partial class AdvancedUI : ApplicationState
 
     public void Stop()
     {
+        _sampleInput?.Dispose();
+        _sampleInput = null;
     }
 
     /// <summary>Disable exit on Esc.</summary>
@@ -305,9 +310,7 @@ public partial class AdvancedUI : ApplicationState
     {
         var timeStep = eventData.TimeStep;
 
-        var input = GetSubsystem<Input>()!;
-
-        if (input.GetKeyPress(Key.F9))
+        if (_sampleInput!.Pressed("Debugger"))
         {
             var ui = GetSubsystem<RmlUISubsystem>()!;
             ui.SetDebuggerVisible(!ui.IsDebuggerVisible());
@@ -321,6 +324,8 @@ public partial class AdvancedUI : ApplicationState
 
     public override void Dispose()
     {
+        _sampleInput?.Dispose();
+        _sampleInput = null;
         _window = null;
         _cameraNode = null;
         _scene?.Dispose();
@@ -339,6 +344,7 @@ public partial class AdvancedUI : ApplicationState
     private Scene? _scene;
     private Node? _cameraNode;
     private Viewport? _viewport;
+    private SampleInputMap? _sampleInput;
 }
 
 internal sealed class AdvancedUIApplication : Application
