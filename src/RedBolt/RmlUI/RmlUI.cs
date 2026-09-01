@@ -723,6 +723,8 @@ public partial class RmlUI : RedObject
     private readonly Std.String _textInput = new();
     private bool _disposed;
     private bool _automaticScale = true;
+    private readonly DirectionalPadAdapter _gamepadDirectionalPad = new();
+    private bool _gamepadNavigationEnabled;
 
     /// <summary>Construct.</summary>
     public RmlUI(string name = "master")
@@ -767,6 +769,8 @@ public partial class RmlUI : RedObject
         SubscribeToEvent<InputEvents.TouchMoveEvent>(input, HandleTouchMove);
         SubscribeToEvent<InputEvents.KeyDownEvent>(input, HandleKeyDown);
         SubscribeToEvent<InputEvents.KeyUpEvent>(input, HandleKeyUp);
+        SubscribeToEvent<InputEvents.JoystickButtonDownEvent>(input, HandleJoystickButtonDown);
+        SubscribeToEvent<InputEvents.JoystickButtonUpEvent>(input, HandleJoystickButtonUp);
         SubscribeToEvent<InputEvents.TextInputEvent>(HandleTextInput);
         SubscribeToEvent<InputEvents.DropFileEvent>(HandleDropFile);
 
@@ -783,6 +787,7 @@ public partial class RmlUI : RedObject
         if (_disposed)
             return;
         _disposed = true;
+        _gamepadDirectionalPad.Dispose();
 
         var ui = CoreContext.Instance.GetSubsystem<RmlUI>();
         if (ui is not null && !ReferenceEquals(ui, this))
@@ -935,6 +940,14 @@ public partial class RmlUI : RedObject
 
     /// <summary>Return true if this subsystem is rendering. When disabled, it is still possible to manually render by calling Render() method.</summary>
     public bool IsRendering() => _isRendering;
+
+    public void SetGamepadNavigationEnabled(bool enabled)
+    {
+        _gamepadNavigationEnabled = enabled;
+        _gamepadDirectionalPad.SetEnabled(enabled);
+    }
+
+    public bool IsGamepadNavigationEnabled() => _gamepadNavigationEnabled;
 
     /// <summary>Return true if input is captured by UI.</summary>
     public bool IsInputCaptured()
@@ -1450,6 +1463,36 @@ public partial class RmlUI : RedObject
             return;
         var modifiers = ModifiersUrho3DToRml(eventData.Qualifiers);
         _rmlContext!.ProcessKeyUp(key, modifiers);
+    }
+
+    private void HandleJoystickButtonDown(ref InputEvents.JoystickButtonDownEvent eventData)
+    {
+        if (!_gamepadNavigationEnabled || GetSubsystem<Input>()!.GetJoystick(eventData.JoystickID) is not { } joystick
+            || !joystick.IsController())
+            return;
+        var key = eventData.Button switch
+        {
+            (int)ControllerButton.A => Rml.Input.KeyIdentifier.KiReturn,
+            (int)ControllerButton.B => Rml.Input.KeyIdentifier.KiEscape,
+            _ => Rml.Input.KeyIdentifier.KiUnknown
+        };
+        if (key != Rml.Input.KeyIdentifier.KiUnknown)
+            _rmlContext!.ProcessKeyDown(key, 0);
+    }
+
+    private void HandleJoystickButtonUp(ref InputEvents.JoystickButtonUpEvent eventData)
+    {
+        if (!_gamepadNavigationEnabled || GetSubsystem<Input>()!.GetJoystick(eventData.JoystickID) is not { } joystick
+            || !joystick.IsController())
+            return;
+        var key = eventData.Button switch
+        {
+            (int)ControllerButton.A => Rml.Input.KeyIdentifier.KiReturn,
+            (int)ControllerButton.B => Rml.Input.KeyIdentifier.KiEscape,
+            _ => Rml.Input.KeyIdentifier.KiUnknown
+        };
+        if (key != Rml.Input.KeyIdentifier.KiUnknown)
+            _rmlContext!.ProcessKeyUp(key, 0);
     }
 
     /// <summary>Handle text input event.</summary>
