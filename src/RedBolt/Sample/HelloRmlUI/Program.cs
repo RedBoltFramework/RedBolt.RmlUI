@@ -190,7 +190,7 @@ public sealed class HelloRmlUI : Application
     /// <summary>Setup after engine initialization and before running main loop.</summary>
     protected override void Start()
     {
-        _sampleInput = new SampleInputMap(movement: true, touchExit: false);
+        _sampleInput = new SampleInputMap(movement: true);
         _sampleInput.Map.MapKeyboardKey("Showcase", Scancode.Space);
         _sampleInput.Map.MapControllerButton("Showcase", ControllerButton.A);
         _sampleInput.Map.MapKeyboardKey("Debugger", Scancode.F9);

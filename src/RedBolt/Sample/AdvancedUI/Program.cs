@@ -214,7 +214,7 @@ public partial class AdvancedUI : ApplicationState
     /// <summary>Setup after engine initialization and before running the main loop.</summary>
     public void Start()
     {
-        _sampleInput = new SampleInputMap(touchExit: false);
+        _sampleInput = new SampleInputMap();
         _sampleInput.Map.MapKeyboardKey("Debugger", Scancode.F9);
         _sampleInput.Map.MapControllerButton("Debugger", ControllerButton.Y);
         // Register custom components.
