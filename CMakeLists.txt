@@ -149,7 +149,7 @@ endif()
 
 if(NOT EMSCRIPTEN)
     file(GENERATE
-        OUTPUT "${REDBOLT_GENERATED_ROOT}/native-modules/$<CONFIG>/RMLUI.json"
+        OUTPUT "${REDBOLT_GENERATED_ROOT}/native-modules/RMLUI.json"
         CONTENT "{\n  \"module\": \"RMLUI\",\n  \"managedSelector\": \"RedBolt.Bindings.RmlUi\",\n  \"nativeLibrary\": \"RedBolt.Native.RmlUi\",\n  \"requires\": [],\n  \"requirementClosure\": [],\n  \"artifacts\": [\"$<TARGET_FILE_NAME:redbolt-rmlui-native-rmlui>\"]\n}\n")
 endif()
 
