@@ -713,11 +713,13 @@ internal sealed class RmlUiGenerator(string nativeLibraryName)
             cppTypeName: "bool"));
         variant.Members.Add(variantBooleanConstructor);
 
-        var stringType = BindingType.CreateConfigured(
-            "Rml::String",
-            "global::Std.String",
-            marshallerTypeName: null,
-            managedMarshaller: "global::Std.__StringMarshaller<global::SharpCpp.Support.BorrowedNativeHandle>");
+        // Reference the shared Std.String wrapper record so SharpCpp resolves its marshaller;
+        // the helper's name and namespace belong to the renderer.
+        var stdString = compilation.Records.FirstOrDefault(static record =>
+            record.SymbolId == "record:std::basic_string" && record.HasMetadata(MetadataKeys.ManagedWrapperAssembly))
+            ?? throw new InvalidOperationException("RmlUi data-model surface requires the shared Std.String wrapper record.");
+
+        var stringType = BindingType.CreateHandle("Rml::String", "global::Std.String", stdString.SymbolId, cppIsRecordValue: true);
         var int64Type = BindingType.CreateConfigured(
             "int64_t", "long", BindingPrimitiveKind.Int64);
         var uint64Type = BindingType.CreateConfigured(
