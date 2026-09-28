@@ -69,7 +69,12 @@ struct [[sharpcpp::managed_type(
 )]] Marshaller<Rml::Colourf> : IndirectValueMarshallerBase<Rml::Colourf> {};
 template <> struct Marshaller<const Rml::Colourf&> : IndirectConstReferenceValueMarshallerBase<Rml::Colourf> {};
 template <> struct ReturnMarshaller<Rml::Colourf> : IndirectValueMarshallerBase<Rml::Colourf> {};
-template <> struct Marshaller<Rml::Colourb> : IndirectValueMarshallerBase<Rml::Colourb> {};
+template <>
+struct [[sharpcpp::managed_type(
+    public_type = "global::RedBolt.Bindings.RmlUi.RmlUiLegacyColourb",
+    managed_marshaller = "global::RedBolt.Bindings.RmlUi.RmlUiLegacyColourbIndirectMarshaller",
+    suppress_emission = true
+)]] Marshaller<Rml::Colourb> : IndirectValueMarshallerBase<Rml::Colourb> {};
 template <> struct Marshaller<const Rml::Colourb&> : IndirectConstReferenceValueMarshallerBase<Rml::Colourb> {};
 template <> struct ReturnMarshaller<Rml::Colourb> : IndirectValueMarshallerBase<Rml::Colourb> {};
 

@@ -741,8 +741,9 @@ internal sealed class RmlUiGenerator(string nativeLibraryName)
             marshallerTypeName: null,
             managedMarshaller: "global::RedBolt.Math.ColorIndirectMarshaller");
         var colourbType = BindingType.CreateConfigured(
-            "Rml::Colourb", "global::RedBolt.Bindings.RmlUi.RmlUiLegacyColourb")
-            .WithCppIsRecordValue(true);
+            "Rml::Colourb", "global::RedBolt.Bindings.RmlUi.RmlUiLegacyColourb",
+            marshallerTypeName: null,
+            managedMarshaller: "global::RedBolt.Bindings.RmlUi.RmlUiLegacyColourbIndirectMarshaller");
         var get = variant.Members.OfType<FunctionBinding>().First(static method =>
             method.IsGeneric && method.NativeName == "Get");
         foreach (var type in new[]
@@ -1104,6 +1105,7 @@ internal sealed class RmlUiGenerator(string nativeLibraryName)
 
             using System.Runtime.CompilerServices;
             using System.Runtime.InteropServices;
+            using System.Runtime.InteropServices.Marshalling;
 
             [StructLayout(LayoutKind.Sequential)]
             public struct RmlUiLegacyVector2f
@@ -1126,6 +1128,19 @@ internal sealed class RmlUiGenerator(string nativeLibraryName)
                 public byte Green;
                 public byte Blue;
                 public byte Alpha;
+            }
+
+            [CustomMarshaller(typeof(RmlUiLegacyColourb), MarshalMode.Default, typeof(RmlUiLegacyColourbIndirectMarshaller))]
+            public static class RmlUiLegacyColourbIndirectMarshaller
+            {
+                public static nint ConvertToUnmanaged(RmlUiLegacyColourb managed) =>
+                    global::SharpCpp.Support.IndirectValueMarshaller<RmlUiLegacyColourb>.ConvertToUnmanaged(managed);
+
+                public static RmlUiLegacyColourb ConvertToManaged(nint unmanaged) =>
+                    global::SharpCpp.Support.IndirectValueMarshaller<RmlUiLegacyColourb>.ConvertToManaged(unmanaged);
+
+                public static void Free(nint unmanaged) =>
+                    global::SharpCpp.Support.IndirectValueMarshaller<RmlUiLegacyColourb>.Free(unmanaged);
             }
 
             [StructLayout(LayoutKind.Sequential)]
