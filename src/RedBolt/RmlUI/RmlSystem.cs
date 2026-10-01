@@ -4,8 +4,6 @@
 
 namespace RedBolt.RmlUI;
 
-using System.Runtime.InteropServices;
-
 using RedBolt.Bindings.RmlUi;
 using RedBolt.Bindings.Sdl;
 using RedBolt.Container;
@@ -86,7 +84,7 @@ public class RmlSystem : SystemInterface
     /// <param name="text">Retrieved text from clipboard.</param>
     public override void GetClipboardText(Std.String text)
     {
-        text.Assign(Marshal.PtrToStringUTF8(Sdl.SdlGetClipboardText()));
+        text.Assign(Sdl.SdlGetClipboardText());
     }
 
     /// <summary>Activate keyboard (for touchscreen devices)</summary>
