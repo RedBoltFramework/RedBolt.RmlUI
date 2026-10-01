@@ -1073,7 +1073,7 @@ public partial class RmlUI : RedObject
         };
         OnDocumentReloaded?.Invoke(args);
 
-        document.Close();
+        document.CloseDocument();
         _ = oldPosition;
         return newDocument;
     }

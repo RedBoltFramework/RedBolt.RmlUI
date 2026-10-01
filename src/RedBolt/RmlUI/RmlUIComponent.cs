@@ -568,7 +568,7 @@ public partial class RmlUIComponent : LogicComponent
         _size = GetSize();
 
         OnDocumentPreUnload();
-        _document.Close();
+        _document.CloseDocument();
         SetDocument(null);
 
         if (_dataModel is not null)

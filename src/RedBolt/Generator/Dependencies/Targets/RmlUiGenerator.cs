@@ -246,6 +246,12 @@ internal sealed class RmlUiGenerator(string nativeLibraryName)
                 method.SetSilentExclusionReason("RmlUi document member is outside the current binding slice");
         }
 
+        // SafeHandle already exposes Close(); keep the document close operation distinct.
+        var closeDocument = elementDocument.Members.OfType<FunctionBinding>().First(static method =>
+            method.NativeName == "Close" && method.Parameters.Count == 0);
+        closeDocument.ManagedName = "CloseDocument";
+        closeDocument.SetMetadata(MetadataKeys.ExplicitManagedRename, true);
+
         var property = compilation.Records.First(static record =>
             record.CppQualifiedName == "Rml::Property");
         property.Bases.Clear();
