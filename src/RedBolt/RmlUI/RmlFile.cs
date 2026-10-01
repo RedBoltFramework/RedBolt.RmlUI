@@ -35,7 +35,7 @@ public class RmlFile : FileInterface
     }
 
     /// <summary>Closes a previously opened file.</summary>
-    public override void NativeClose(nuint file)
+    public override void CloseFile(nuint file)
     {
         var handle = GCHandle.FromIntPtr((nint)file);
         ((AbstractFile)handle.Target!).Dispose();

@@ -109,6 +109,11 @@ internal sealed class RmlUiGenerator(string nativeLibraryName)
             record.CppQualifiedName == "Rml::FileInterface");
         fileInterface.Bases.Clear();
         fileInterface.ManagedBaseTypeName = null;
+        // SafeHandle already exposes Close(); name the file close operation explicitly.
+        var closeFile = fileInterface.Members.OfType<FunctionBinding>().First(static method =>
+            method.NativeName == "Close" && method.Parameters.Count == 1);
+        closeFile.ManagedName = "CloseFile";
+        closeFile.SetMetadata(MetadataKeys.ExplicitManagedRename, true);
 
         var fontEngineInterface = compilation.Records.First(static record =>
             record.CppQualifiedName == "Rml::FontEngineInterface");
