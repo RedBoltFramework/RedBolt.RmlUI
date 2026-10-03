@@ -12,7 +12,10 @@ endif()
 
 file(GLOB_RECURSE REDBOLT_DEPENDENCIES_GENERATOR_INPUTS CONFIGURE_DEPENDS
     "${CMAKE_CURRENT_SOURCE_DIR}/*.cs"
-    "${CMAKE_CURRENT_SOURCE_DIR}/*.csproj")
+    "${CMAKE_CURRENT_SOURCE_DIR}/*.csproj"
+    "${REDBOLT_ROOT}/src/RedBolt/Generator/Dependencies/BindingTargetGenerator.cs"
+    "${REDBOLT_ROOT}/src/RedBolt/Generator/Dependencies/FixedWidthAliasNormalizer.cs"
+    "${REDBOLT_ROOT}/src/RedBolt/Generator/Dependencies/GeneratorOptions.cs")
 list(APPEND REDBOLT_DEPENDENCIES_GENERATOR_INPUTS
     "${PROJECT_SOURCE_DIR}/src/RedBolt/Native/RmlUi/RmlHarfBuzzFontEngine.hpp"
     "${PROJECT_SOURCE_DIR}/src/RedBolt/Native/RmlUi/RmlUiValueMarshallers.hpp")
