@@ -6,7 +6,8 @@
   "native": true,
   "webNative": true,
   "projectReferences": [
-    "src/RedBolt/RmlUI/RedBolt.RmlUI.csproj"
+    "src/RedBolt/RmlUI/RedBolt.RmlUI.csproj",
+    "../RedBolt/src/RedBolt/Audio/RedBolt.Audio.csproj"
   ],
   "coreData": [
     "bin/CoreData.RmlUI/**/*"

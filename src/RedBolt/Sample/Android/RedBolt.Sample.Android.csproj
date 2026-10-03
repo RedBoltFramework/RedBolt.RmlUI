@@ -17,6 +17,7 @@ For a copy, see <https://opensource.org/licenses/MIT> or the accompanying LICENS
     <!-- <redbolt-generated name="android-project-items"> -->
     <Compile Include="Program.cs" />
     <ProjectReference Include="../../RmlUI/RedBolt.RmlUI.csproj" />
+    <ProjectReference Include="../../../../../RedBolt/src/RedBolt/Audio/RedBolt.Audio.csproj" />
     <Compile Include="../AdvancedUI/**/*.cs" Link="Samples/RedBoltRmlUI/AdvancedUI/%(RecursiveDir)%(Filename)%(Extension)" />
     <Compile Include="../HelloRmlUI/**/*.cs" Link="Samples/RedBoltRmlUI/HelloRmlUI/%(RecursiveDir)%(Filename)%(Extension)" />
     <AndroidAsset Include="../../../../bin/CoreData.RmlUI/**/*" Link="CoreData/%(RecursiveDir)%(Filename)%(Extension)" />
