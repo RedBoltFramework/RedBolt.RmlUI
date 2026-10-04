@@ -52,6 +52,7 @@ include("${REDBOLT_ROOT}/cmake/CPM.cmake")
 set(FETCHCONTENT_BASE_DIR "${CMAKE_BINARY_DIR}/deps")
 
 include("${REDBOLT_ROOT}/cmake/RedBoltSharpCpp.cmake")
+include("${REDBOLT_ROOT}/cmake/RedBoltNativeModuleManifest.cmake")
 include(extern/RmlUi.cmake)
 
 if(ANDROID)
@@ -147,14 +148,22 @@ if(WIN32)
     set_target_properties(redbolt-rmlui-native-rmlui PROPERTIES PREFIX "")
 endif()
 
-if(NOT EMSCRIPTEN)
-    file(GENERATE
-        OUTPUT "${REDBOLT_GENERATED_ROOT}/native-modules/RMLUI.json"
-        CONTENT "{\n  \"module\": \"RMLUI\",\n  \"managedSelector\": \"RedBolt.Bindings.RmlUi\",\n  \"nativeLibrary\": \"RedBolt.Native.RmlUi\",\n  \"requires\": [],\n  \"requirementClosure\": [],\n  \"artifacts\": [\"$<TARGET_FILE_NAME:redbolt-rmlui-native-rmlui>\"]\n}\n")
-endif()
+redbolt_write_native_module_manifest(
+    MODULE RMLUI
+    TARGET redbolt-rmlui-native-rmlui
+    SELECTOR RedBolt.Bindings.RmlUi
+    LIBRARY_NAME "${REDBOLT_RMLUI_NATIVE_LIBRARY_NAME}"
+    # HarfBuzz is a core module: it is allowed as a dependency, but "requires" names only modules of this build tree.
+    REQUIREMENT_CLOSURE HARFBUZZ
+    WRAPPERS "HARFBUZZ=$<TARGET_FILE_NAME:redbolt-core-harfbuzz>"
+    OUTPUT_DIR "${REDBOLT_GENERATED_ROOT}/native-modules")
 
 add_custom_target(redbolt-rmlui-native-all DEPENDS redbolt-rmlui-native-rmlui)
 add_custom_target(redbolt-rmlui-android-native DEPENDS redbolt-rmlui-native-rmlui)
+if(NOT EMSCRIPTEN)
+    add_dependencies(redbolt-rmlui-native-all redbolt-rmlui-native-rmlui-module)
+    add_dependencies(redbolt-rmlui-android-native redbolt-rmlui-native-rmlui-module)
+endif()
 
 if(EMSCRIPTEN)
     set(REDBOLT_RMLUI_WASM_ARCHIVE "${CMAKE_BINARY_DIR}/lib/Release/wasm/RedBolt.RmlUI.Native.Web.a")
